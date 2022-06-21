@@ -30,7 +30,6 @@ public class ex06 {
         }
 
         if (controle == false) {
-            //nao adicionei em nenhuma posição pois, o exercício nao explicita em qual posição deve ser adicionado
             System.out.println("Número não existe, adicionado. Digitado: " + valor1);
         }
     }

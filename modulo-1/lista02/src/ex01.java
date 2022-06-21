@@ -22,9 +22,6 @@ public class ex01 {
         System.out.printf("R$ %.2f", valor);
         System.out.println("\nPromoção: " + produto + "\n" + "----------------");
 
-        //vetor para alocar as 10 unidades
-        int[] vetor = new int[10];
-
         //primeiro percentual de desconto
         float percentual = 5;
 
