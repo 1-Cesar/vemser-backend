@@ -10,7 +10,7 @@ public class ex08 {
         //Scanner para leitura de dados, matriz e variaveis
         Scanner leia = new Scanner(System.in);
         double[][] matriz = new double[5][4];
-        double maiorNota = 0, matricula = 0, media = 0;
+        double maiorNota = 0, matricula = 0;
 
         //estrutura de repetição para popular a matriz
         for (int i = 0; i < matriz.length; i++){
