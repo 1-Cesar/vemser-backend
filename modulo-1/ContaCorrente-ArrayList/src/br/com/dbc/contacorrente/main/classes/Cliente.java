@@ -36,15 +36,19 @@ public class Cliente {
         return nome;
     }
     public void imprimirContatos() {
-        System.out.println("-----------------------------------");
-        for (Contato i:contatos) {
-            i.imprimirContato();
+        if (contatos != null) {
+            System.out.println("-----------------------------------");
+            for (Contato i:contatos) {
+                i.imprimirContato();
+            }
         }
     }
     public void imprimirEnderecos() {
-        System.out.println("-----------------------------------");
-        for (Endereco i:enderecos) {
-            i.imprimirEndereco();
+        if (enderecos != null) {
+            System.out.println("-----------------------------------");
+            for (Endereco i:enderecos) {
+                i.imprimirEndereco();
+            }
         }
     }
     public void imprimirCliente() {

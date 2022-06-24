@@ -10,33 +10,26 @@ public class Contato {
         this.descricao = descricao;
         this.telefone = telefone;
     }
-
     public void imprimirContato() {
         System.out.println("Tipo de Telefone: " + tipo + "\n" +
                            "Telefone: "         + telefone + "\n" +
                            "Descricao: "        + descricao);
     }
-
     public int getTipo() {
         return tipo;
     }
-
     public void setTipo(int tipo) {
         this.tipo = tipo;
     }
-
     public String getDescricao() {
         return descricao;
     }
-
     public void setDescricao(String descricao) {
         this.descricao = descricao;
     }
-
     public String getTelefone() {
         return telefone;
     }
-
     public void setTelefone(String telefone) {
         this.telefone = telefone;
     }
