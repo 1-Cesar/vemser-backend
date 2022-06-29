@@ -6,14 +6,14 @@ public class Endereco {
     private String logradouro, complemento, cep, cidade, estado, pais;
 
     public Endereco(int tipo, int numero, String logradouro, String complemento, String cep, String cidade, String estado, String pais) {
-        this.tipo = tipo;
-        this.numero = numero;
-        this.logradouro = logradouro;
-        this.complemento = complemento;
-        this.cep = cep;
-        this.cidade = cidade;
-        this.estado = estado;
-        this.pais = pais;
+            this.tipo = tipo;
+            this.numero = numero;
+            this.logradouro = logradouro;
+            this.complemento = complemento;
+            this.cep = cep;
+            this.cidade = cidade;
+            this.estado = estado;
+            this.pais = pais;
     }
 
     public void imprimirEndereco() {
