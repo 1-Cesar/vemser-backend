@@ -140,5 +140,13 @@ public class Principal {
         System.out.println("\nConstatação do depósito");
         //Constatação do Depósito
         vegetaCC.imprimir();
+
+        vegetaPagamento.depositar(50D);
+
+        vegetaPagamento.imprimir();
+
+        vegetaPagamento.transferir(vegetaCC, 2D);
+
+        vegetaPagamento.imprimir();
     }
 }

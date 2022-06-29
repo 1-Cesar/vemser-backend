@@ -42,7 +42,7 @@ public abstract class Conta implements Movimentacao {
     @Override
     public boolean sacar(double valor) {
         if (valor > 0 && valor < getSaldo()) {
-            setSaldo(getSaldo()-valor);
+            retirarDinheiro(valor);
             return true;
         }
         return false;
@@ -61,11 +61,16 @@ public abstract class Conta implements Movimentacao {
     }
     @Override
     public boolean transferir(Conta conta, double valor) {
-        if (valor > 0 && sacar(valor)) {
+        if (valor > 0 && valor <= saldo) {
+            retirarDinheiro(valor);
             conta.depositar(valor);
             System.out.println("Transferencia Realizada!");
             return true;
         }
         return false;
+    }
+
+    private void retirarDinheiro(double valor){
+        saldo-=valor;
     }
 }
