@@ -26,7 +26,6 @@ public class Principal {
         listVegetaEnd.add(vegetaEnd);
         listVegetaEnd.add(vegetaEnd2);
 
-
         //Objeto cliente
         Cliente vegeta = new Cliente("Vegeta","111.111.111-11", listVegetaTel, listVegetaEnd);
 
