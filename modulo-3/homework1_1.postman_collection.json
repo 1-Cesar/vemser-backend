@@ -57,7 +57,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{    \r\n    \"title\": \"ola album 1\"       \r\n}",
+							"raw": "{    \r\n        \"userId\": 1,\r\n        \"title\": \"olaaaa\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -65,7 +65,7 @@
 							}
 						},
 						"url": {
-							"raw": "https://jsonplaceholder.typicode.com/albums/1",
+							"raw": "https://jsonplaceholder.typicode.com/albums/5",
 							"protocol": "https",
 							"host": [
 								"jsonplaceholder",
@@ -74,7 +74,7 @@
 							],
 							"path": [
 								"albums",
-								"1"
+								"5"
 							]
 						}
 					},
@@ -85,6 +85,15 @@
 					"request": {
 						"method": "POST",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userId\": \"3\",    \r\n    \"title\": \"POSTMAN\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
 							"raw": "https://jsonplaceholder.typicode.com/albums",
 							"protocol": "https",
@@ -174,7 +183,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{    \r\n    \"title\": \"ola photos 1\",\r\n    \"url\": \"https://google.com\"   \r\n}",
+							"raw": "{       \r\n        \"albumId\": 1,\r\n        \"title\": \"postmannnnn\",\r\n        \"url\": \"https://google.com\",\r\n        \"thumbnailUrl\": \"https://google.com\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -182,7 +191,7 @@
 							}
 						},
 						"url": {
-							"raw": "https://jsonplaceholder.typicode.com/photos/1",
+							"raw": "https://jsonplaceholder.typicode.com/photos/2",
 							"protocol": "https",
 							"host": [
 								"jsonplaceholder",
@@ -191,7 +200,7 @@
 							],
 							"path": [
 								"photos",
-								"1"
+								"2"
 							]
 						}
 					},
@@ -223,6 +232,15 @@
 					"request": {
 						"method": "POST",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{  \r\n        \"userId\": 3,         \r\n        \"title\": \"teste do teste\",\r\n        \"url\": \"https://google.com.br\",\r\n        \"thumbnailUrl\": \"https://google.com.br\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
 							"raw": "https://jsonplaceholder.typicode.com/photos",
 							"protocol": "https",
@@ -291,7 +309,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{    \r\n    \"name\": \"ola user 1\",\r\n    \"email\": \"olauser1@ola.biz\"       \r\n}",
+							"raw": "{ \r\n        \"name\": \"Leanne Graham Teste Teste Testeeeee kkkkk\",\r\n        \"username\": \"Bret\",\r\n        \"email\": \"Sincere@april.biz\",\r\n        \"address\": {\r\n            \"street\": \"Kulas Light\",\r\n            \"suite\": \"Apt. 556\",\r\n            \"city\": \"Gwenborough\",\r\n            \"zipcode\": \"92998-3874\",\r\n            \"geo\": {\r\n                \"lat\": \"-37.3159\",\r\n                \"lng\": \"81.1496\"\r\n            }\r\n        },\r\n        \"phone\": \"1-770-736-8031 x56442\",\r\n        \"website\": \"hildegard.org\",\r\n        \"company\": {\r\n            \"name\": \"Romaguera-Crona\",\r\n            \"catchPhrase\": \"Multi-layered client-server neural-net\",\r\n            \"bs\": \"harness real-time e-markets\"\r\n        }\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -299,7 +317,7 @@
 							}
 						},
 						"url": {
-							"raw": "https://jsonplaceholder.typicode.com/users/1",
+							"raw": "https://jsonplaceholder.typicode.com/users/2",
 							"protocol": "https",
 							"host": [
 								"jsonplaceholder",
@@ -308,7 +326,7 @@
 							],
 							"path": [
 								"users",
-								"1"
+								"2"
 							]
 						}
 					},
@@ -319,6 +337,15 @@
 					"request": {
 						"method": "POST",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"name\": \"Leanne Graham Leanne Graham Leanne Graham of Leanne Graham\",\r\n        \"username\": \"Bret 2022\",\r\n        \"email\": \"Sincere2022@april.biz\",\r\n        \"address\": {\r\n            \"street\": \"Kulas Light\",\r\n            \"suite\": \"Apt. 556\",\r\n            \"city\": \"Gwenborough\",\r\n            \"zipcode\": \"92998-3874\",\r\n            \"geo\": {\r\n                \"lat\": \"-37.3159\",\r\n                \"lng\": \"81.1496\"\r\n            }\r\n        },\r\n        \"phone\": \"1-770-736-8031 x565646541212442\",\r\n        \"website\": \"hildegard.org\",\r\n        \"company\": {\r\n            \"name\": \"Romaguera-Cronaaaa\",\r\n            \"catchPhrase\": \"Multi-layered client-server neural-net\",\r\n            \"bs\": \"harness real-time e-markets\"\r\n        }\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
 							"raw": "https://jsonplaceholder.typicode.com/users",
 							"protocol": "https",
@@ -406,6 +433,15 @@
 					"request": {
 						"method": "POST",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": " {        \r\n        \"postId\": 2,\r\n        \"name\": \"lorem ipsun\",\r\n        \"email\": \"lorem ipsun@loremipsun\",\r\n        \"body\": \"lorem ipsun\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
 							"raw": "https://jsonplaceholder.typicode.com/comments",
 							"protocol": "https",
@@ -449,7 +485,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"body\": \"texto 1\"\r\n}",
+							"raw": " {\r\n        \"postId\": 5,\r\n        \"name\": \"lorem ipsun2\",\r\n        \"email\": \"lorem ipsu2n@lorem2ipsun\",\r\n        \"body\": \"lorem ipsun2\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -525,7 +561,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": " {\r\n     \"title\": \"lorem ipsummmmmmm\",\r\n     \"completed\": true\r\n }",
+							"raw": " {\r\n        \"userId\": 2,        \r\n        \"title\": \"TESTE\",\r\n        \"completed\": true\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -553,6 +589,15 @@
 					"request": {
 						"method": "POST",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": " {\r\n    \"userId\": 2,    \r\n    \"title\": \"novo registro\",\r\n    \"completed\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
 							"raw": "https://jsonplaceholder.typicode.com/todos",
 							"protocol": "https",
