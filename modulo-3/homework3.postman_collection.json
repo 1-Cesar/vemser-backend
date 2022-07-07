@@ -1,0 +1,148 @@
+{
+	"info": {
+		"_postman_id": "e5b052be-a133-4303-add2-74b61ed06ebd",
+		"name": "homework3",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "19490635"
+	},
+	"item": [
+		{
+			"name": "todos_enderecos",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/endereco",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"endereco"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "endereco_especifico",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/endereco/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"endereco",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "endereco_por_pessoa",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/endereco/1/pessoa",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"endereco",
+						"1",
+						"pessoa"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "endereco_id_pessoa",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{   \r\n    \"tipo\": \"COMERCIAL\",\r\n    \"logradouro\": \"Rua Celso Garcia\",\r\n    \"numero\": 20,\r\n    \"complemento\": \"APTO\",\r\n    \"cep\": \"11111-111\",\r\n    \"cidade\": \"São Paulo\",\r\n    \"estado\": \"SP\",\r\n    \"pais\": \"Brasil\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/endereco/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"endereco",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "altera_endereco",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"idPessoa\": 2,    \r\n    \"tipo\": \"RESIDENCIAL\",\r\n    \"logradouro\": \"Rua Tuiuti\",\r\n    \"numero\": 300,\r\n    \"complemento\": \"CASA\",\r\n    \"cep\": \"22222-222\",\r\n    \"cidade\": \"São Paulo\",\r\n    \"estado\": \"SP\",\r\n    \"pais\": \"Brasil\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/endereco/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"endereco",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "remove_endereco",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/endereco/3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"endereco",
+						"3"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

@@ -5,12 +5,13 @@ package br.com.dbc.vemser.pessoaapi.repository;
  */
 import br.com.dbc.vemser.pessoaapi.entity.Contato;
 import br.com.dbc.vemser.pessoaapi.entity.EnumTipo;
+import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.stream.Collectors;
 
+@Repository
 public class ContatoRepository {
     private static List<Contato> listContatos = new ArrayList<>();
     private AtomicInteger COUNTER = new AtomicInteger();
@@ -24,45 +25,12 @@ public class ContatoRepository {
         listContatos.add(new Contato(COUNTER.incrementAndGet() /*5*/, COUNTER2.incrementAndGet(), "Telegram", EnumTipo.COMERCIAL));
     }
 
-    public Contato create(Integer id, Contato contato) {
-        contato.setIdContato(COUNTER2.incrementAndGet());
-        contato.setIdPessoa(id);
-        listContatos.add(contato);
-        return contato;
-    }
-
-    public List<Contato> list() {
+    public static List<Contato> getListContatos() {
         return listContatos;
     }
 
-    public Contato update(Integer id,
-                         Contato contatoAtualizar) throws Exception {
-        Contato contatoRecuperado = listContatos.stream()
-                .filter(contato -> contato.getIdContato().equals(id))
-                .findFirst()
-                .orElseThrow(() -> new Exception("Contato não encontrada"));
-        contatoRecuperado.setDescricao(contatoAtualizar.getDescricao());
-        contatoRecuperado.setTipoContato(contatoAtualizar.getTipoContato());
-        return contatoRecuperado;
+    public AtomicInteger getCOUNTER2() {
+        return COUNTER2;
     }
 
-    public void delete(Integer id) throws Exception {
-        Contato contatoRecuperado = listContatos.stream()
-                .filter(contato -> contato.getIdContato().equals(id))
-                .findFirst()
-                .orElseThrow(() -> new Exception("Contato não econtrada"));
-        listContatos.remove(contatoRecuperado);
-    }
-
-    public List<Contato> listByDescricao(String descricao) {
-        return listContatos.stream()
-                .filter(contato -> contato.getDescricao().toUpperCase().contains(descricao.toUpperCase()))
-                .collect(Collectors.toList());
-    }
-
-    public List<Contato> listById(int id) {
-        return listContatos.stream()
-                .filter(contato -> contato.getIdContato().equals(id))
-                .collect(Collectors.toList());
-    }
 }

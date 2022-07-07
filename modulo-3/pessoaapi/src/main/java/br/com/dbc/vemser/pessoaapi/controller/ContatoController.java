@@ -5,6 +5,7 @@ package br.com.dbc.vemser.pessoaapi.controller;
  */
 import br.com.dbc.vemser.pessoaapi.entity.Contato;
 import br.com.dbc.vemser.pessoaapi.service.ContatoService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,11 +14,8 @@ import java.util.List;
 @RequestMapping("/contato")
 public class ContatoController {
 
+    @Autowired
     private ContatoService contatoService;
-
-    public ContatoController() {
-        contatoService = new ContatoService();
-    }
 
     @GetMapping
     public List<Contato> list() {
