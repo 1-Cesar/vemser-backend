@@ -37,7 +37,8 @@ public class PessoaService {
         pessoaRepository.list().remove(pessoaRecuperada);
     }
 
-    public List<Pessoa> listById(int id) {
+    public List<Pessoa> listById(int id) throws Exception {
+        localizarPessoa(id);
         return pessoaRepository.list().stream()
                 .filter(pessoa -> pessoa.getIdPessoa().equals(id))
                 .collect(Collectors.toList());

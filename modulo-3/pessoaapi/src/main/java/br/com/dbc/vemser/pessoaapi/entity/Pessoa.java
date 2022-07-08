@@ -12,11 +12,12 @@ public class Pessoa {
     @NotBlank
     private String nome;
 
-    @NotBlank
+    @NotNull
     @Past
     private LocalDate dataNascimento;
 
     @NotBlank
+    @CPF
     @Size(min = 11, max = 11)
     private String cpf;
 
