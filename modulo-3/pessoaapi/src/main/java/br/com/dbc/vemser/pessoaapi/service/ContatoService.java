@@ -17,45 +17,46 @@ public class ContatoService {
     @Autowired
     private ContatoRepository contatoRepository;
 
-    public Contato create(Integer id, Contato contato) {
-        contato.setIdContato(contatoRepository.getCOUNTER2().incrementAndGet());
-        contato.setIdPessoa(id);
-        contatoRepository.getListContatos().add(contato);
-        return contato;
+    @Autowired
+    private PessoaService pessoaService;
+
+    public Contato create(Integer id, Contato contato) throws Exception {
+        pessoaService.localizarPessoa(id);
+        return contatoRepository.create(id, contato);
     }
 
     public List<Contato> list() {
-        return contatoRepository.getListContatos();
+        return contatoRepository.list();
     }
 
     public Contato update(Integer id,
                           Contato contatoAtualizar) throws Exception {
-        Contato contatoRecuperado = contatoRepository.getListContatos().stream()
-                .filter(contato -> contato.getIdContato().equals(id))
-                .findFirst()
-                .orElseThrow(() -> new Exception("Contato não localizado"));
+        localizarContato(id);
+        Contato contatoRecuperado = localizarContato(id);
+        contatoRecuperado.setNumero(contatoAtualizar.getNumero());
         contatoRecuperado.setDescricao(contatoAtualizar.getDescricao());
         contatoRecuperado.setTipoContato(contatoAtualizar.getTipoContato());
         return contatoRecuperado;
     }
 
     public void delete(Integer id) throws Exception {
-        Contato contatoRecuperado = contatoRepository.getListContatos().stream()
+        localizarContato(id);
+        Contato contatoRecuperado = localizarContato(id);
+        contatoRepository.list().remove(contatoRecuperado);
+    }
+
+    public List<Contato> listById(int id) throws Exception {
+        localizarContato(id);
+        return contatoRepository.list().stream()
                 .filter(contato -> contato.getIdContato().equals(id))
+                .collect(Collectors.toList());
+    }
+
+    public Contato localizarContato(Integer idContato) throws Exception {
+        Contato contatoRecuperado = contatoRepository.list().stream()
+                .filter(contato -> contato.getIdContato().equals(idContato))
                 .findFirst()
                 .orElseThrow(() -> new Exception("Contato não localizado"));
-        contatoRepository.getListContatos().remove(contatoRecuperado);
-    }
-
-    public List<Contato> listByDescricao(String descricao) {
-        return contatoRepository.getListContatos().stream()
-                .filter(contato -> contato.getDescricao().toUpperCase().contains(descricao.toUpperCase()))
-                .collect(Collectors.toList());
-    }
-
-    public List<Contato> listById(int id) {
-        return contatoRepository.getListContatos().stream()
-                .filter(contato -> contato.getIdContato().equals(id))
-                .collect(Collectors.toList());
+        return contatoRecuperado;
     }
 }

@@ -6,12 +6,16 @@ import br.com.dbc.vemser.pessoaapi.repository.PessoaRepository;
 import br.com.dbc.vemser.pessoaapi.service.PessoaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
 @RequestMapping("/pessoa")
+@Validated
 public class PessoaController {
 
     @Autowired
@@ -25,19 +29,14 @@ public class PessoaController {
         return propertieReader.getAmbiente();
     }
 
-    @GetMapping("/hello")
-    public String hello() {
-        return "Hello world!";
-    }
-
     @GetMapping
-    public List<Pessoa> list() {
-        return pessoaService.list();
+    public ResponseEntity<List<Pessoa>> list() {
+        return ResponseEntity.ok(pessoaService.list());
     }
 
     @GetMapping("/{idPessoa}")
-    public List<Pessoa> listById (@PathVariable("idPessoa") int id) {
-        return pessoaService.listById(id);
+    public ResponseEntity<List<Pessoa>> listById (@PathVariable("idPessoa") int id) throws Exception {
+        return ResponseEntity.ok(pessoaService.listById(id));
     }
 
     @GetMapping("/byname")
@@ -46,14 +45,15 @@ public class PessoaController {
     }
 
     @PostMapping
-    public Pessoa create(@RequestBody Pessoa pessoa) {
-        return pessoaService.create(pessoa);
+    public ResponseEntity<Pessoa> create(@Valid @RequestBody Pessoa pessoa) {
+        return ResponseEntity.ok(pessoaService.create(pessoa));
+        //return new ResponseEntity<>(pessoaService.create(pessoa), HttpStatus.I_AM_TEAPOT
     }
 
     @PutMapping("/{idPessoa}")
-    public Pessoa update(@PathVariable("idPessoa") Integer id,
-                         @RequestBody Pessoa pessoaAtualizar) throws Exception {
-        return pessoaService.update(id, pessoaAtualizar);
+    public ResponseEntity<Pessoa> update(@PathVariable("idPessoa") Integer id,
+                         @Valid @RequestBody Pessoa pessoaAtualizar) throws Exception {
+        return ResponseEntity.ok(pessoaService.update(id, pessoaAtualizar));
     }
 
     @DeleteMapping("/{idPessoa}")

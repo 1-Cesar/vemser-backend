@@ -16,23 +16,22 @@ public class EnderecoService {
     @Autowired
     private EnderecoRepository enderecoRepository;
 
-    public Endereco create(Integer id, Endereco endereco) {
-        endereco.setIdEndereco(enderecoRepository.getCOUNTER2().incrementAndGet());
-        endereco.setIdPessoa(id);
-        enderecoRepository.getListEnderecos().add(endereco);
-        return endereco;
+    @Autowired
+    private PessoaService pessoaService;
+
+    public Endereco create(Integer id, Endereco endereco) throws Exception {
+        pessoaService.localizarPessoa(id);
+        return enderecoRepository.create(id, endereco);
     }
 
     public List<Endereco> list() {
-        return enderecoRepository.getListEnderecos();
+        return enderecoRepository.list();
     }
 
     public Endereco update(Integer id,
                            Endereco enderecoAtualizar) throws Exception {
-        Endereco enderecoRecuperado = enderecoRepository.getListEnderecos().stream()
-                .filter(endereco -> endereco.getIdEndereco().equals(id))
-                .findFirst()
-                .orElseThrow(() -> new Exception("Endereço não localizado"));
+        localizarEndereco(id);
+        Endereco enderecoRecuperado = localizarEndereco(id);
         enderecoRecuperado.setTipo(enderecoAtualizar.getTipo());
         enderecoRecuperado.setLogradouro(enderecoAtualizar.getLogradouro());
         enderecoRecuperado.setNumero(enderecoAtualizar.getNumero());
@@ -46,28 +45,36 @@ public class EnderecoService {
     }
 
     public void delete(Integer id) throws Exception {
-        Endereco enderecoRecuperado = enderecoRepository.getListEnderecos().stream()
-                .filter(endereco -> endereco.getIdEndereco().equals(id))
-                .findFirst()
-                .orElseThrow(() -> new Exception("Endereço não localizado"));
-        enderecoRepository.getListEnderecos().remove(enderecoRecuperado);
+        localizarEndereco(id);
+        Endereco enderecoRecuperado = localizarEndereco(id);
+        enderecoRepository.list().remove(enderecoRecuperado);
     }
 
     public List<Endereco> listByTipo(EnumTipo tipo) {
-        return enderecoRepository.getListEnderecos().stream()
+        return enderecoRepository.list().stream()
                 .filter(endereco -> endereco.getTipo().equals(tipo))
                 .collect(Collectors.toList());
     }
 
-    public List<Endereco> listByIdEndereco(int id) {
-        return enderecoRepository.getListEnderecos().stream()
+    public List<Endereco> listByIdEndereco(int id) throws Exception {
+        localizarEndereco(id);
+        return enderecoRepository.list().stream()
                 .filter(endereco -> endereco.getIdEndereco().equals(id))
                 .collect(Collectors.toList());
     }
 
-    public List<Endereco> listByIdPessoa(int id) {
-        return enderecoRepository.getListEnderecos().stream()
+    public List<Endereco> listByIdPessoa(int id) throws Exception {
+        pessoaService.localizarPessoa(id);
+        return enderecoRepository.list().stream()
                 .filter(endereco -> endereco.getIdPessoa().equals(id))
                 .collect(Collectors.toList());
+    }
+
+    public Endereco localizarEndereco (Integer idEndereco) throws Exception {
+        Endereco enderecoRecuperado = enderecoRepository.list().stream()
+                .filter(endereco -> endereco.getIdEndereco().equals(idEndereco))
+                .findFirst()
+                .orElseThrow(() -> new Exception("Endereço não localizado"));
+        return enderecoRecuperado;
     }
 }

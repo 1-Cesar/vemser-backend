@@ -1,5 +1,6 @@
 package br.com.dbc.vemser.pessoaapi.repository;
 
+import br.com.dbc.vemser.pessoaapi.entity.Contato;
 import br.com.dbc.vemser.pessoaapi.entity.Pessoa;
 import org.springframework.stereotype.Repository;
 
@@ -23,12 +24,14 @@ public class PessoaRepository {
         listaPessoas.add(new Pessoa(COUNTER.incrementAndGet() /*5*/, "Ana", LocalDate.parse("01/07/1990", formatter), "12345678917"));
     }
 
-    public static List<Pessoa> getListaPessoas() {
-        return listaPessoas;
+    public Pessoa create(Pessoa pessoa) {
+        pessoa.setIdPessoa(COUNTER.incrementAndGet());
+        listaPessoas.add(pessoa);
+        return pessoa;
     }
 
-    public AtomicInteger getCOUNTER() {
-        return COUNTER;
+    public List<Pessoa> list() {
+        return listaPessoas;
     }
 
 }

@@ -15,22 +15,17 @@ public class PessoaService {
     private PessoaRepository pessoaRepository;
 
     public Pessoa create(Pessoa pessoa) {
-        pessoa.setIdPessoa(pessoaRepository.getCOUNTER().incrementAndGet());
-        pessoaRepository.getListaPessoas().add(pessoa);
-
+        pessoaRepository.create(pessoa);
         return pessoa;
     }
 
     public List<Pessoa> list(){
-        return pessoaRepository.getListaPessoas();
+        return pessoaRepository.list();
     }
 
     public Pessoa update(Integer id,
                          Pessoa pessoaAtualizar) throws Exception {
-        Pessoa pessoaRecuperada = pessoaRepository.getListaPessoas().stream()
-                .filter(pessoa -> pessoa.getIdPessoa().equals(id))
-                .findFirst()
-                .orElseThrow(() -> new Exception("Pessoa não localizada"));
+        Pessoa pessoaRecuperada = localizarPessoa(id);
         pessoaRecuperada.setCpf(pessoaAtualizar.getCpf());
         pessoaRecuperada.setNome(pessoaAtualizar.getNome());
         pessoaRecuperada.setDataNascimento(pessoaAtualizar.getDataNascimento());
@@ -38,22 +33,27 @@ public class PessoaService {
     }
 
     public void delete(Integer id) throws Exception {
-        Pessoa pessoaRecuperada = pessoaRepository.getListaPessoas().stream()
-                .filter(pessoa -> pessoa.getIdPessoa().equals(id))
-                .findFirst()
-                .orElseThrow(() -> new Exception("Pessoa não econtrada"));
-        pessoaRepository.getListaPessoas().remove(pessoaRecuperada);
+        Pessoa pessoaRecuperada = localizarPessoa(id);
+        pessoaRepository.list().remove(pessoaRecuperada);
     }
 
     public List<Pessoa> listById(int id) {
-        return pessoaRepository.getListaPessoas().stream()
+        return pessoaRepository.list().stream()
                 .filter(pessoa -> pessoa.getIdPessoa().equals(id))
                 .collect(Collectors.toList());
     }
 
     public List<Pessoa> listByName(String nome) {
-        return pessoaRepository.getListaPessoas().stream()
+        return pessoaRepository.list().stream()
                 .filter(pessoa -> pessoa.getNome().toUpperCase().contains(nome.toUpperCase()))
                 .collect(Collectors.toList());
+    }
+
+    public Pessoa localizarPessoa (Integer idPessoa) throws Exception {
+        Pessoa pessoaRecuperada = pessoaRepository.list().stream()
+                .filter(pessoa -> pessoa.getIdPessoa().equals(idPessoa))
+                .findFirst()
+                .orElseThrow(() -> new Exception("Pessoa não encontrada"));
+        return pessoaRecuperada;
     }
 }

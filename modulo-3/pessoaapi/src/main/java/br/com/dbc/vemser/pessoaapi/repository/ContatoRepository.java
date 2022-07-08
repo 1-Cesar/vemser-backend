@@ -18,19 +18,22 @@ public class ContatoRepository {
     private AtomicInteger COUNTER2 = new AtomicInteger();
 
     public ContatoRepository() {
-        listContatos.add(new Contato(COUNTER.incrementAndGet() /*1*/, COUNTER2.incrementAndGet(), "Whatsapp", EnumTipo.COMERCIAL));
-        listContatos.add(new Contato(COUNTER.incrementAndGet() /*2*/, COUNTER2.incrementAndGet(), "Telegram", EnumTipo.RESIDENCIAL));
-        listContatos.add(new Contato(COUNTER.incrementAndGet() /*3*/, COUNTER2.incrementAndGet(), "Whatsapp", EnumTipo.COMERCIAL));
-        listContatos.add(new Contato(COUNTER.incrementAndGet() /*4*/, COUNTER2.incrementAndGet(), "Whatsapp", EnumTipo.RESIDENCIAL));
-        listContatos.add(new Contato(COUNTER.incrementAndGet() /*5*/, COUNTER2.incrementAndGet(), "Telegram", EnumTipo.COMERCIAL));
+        listContatos.add(new Contato(COUNTER.incrementAndGet() /*1*/, COUNTER2.incrementAndGet(), "1111-1111","Whatsapp", EnumTipo.COMERCIAL));
+        listContatos.add(new Contato(COUNTER.incrementAndGet() /*2*/, COUNTER2.incrementAndGet(), "2222-2222","Telegram", EnumTipo.RESIDENCIAL));
+        listContatos.add(new Contato(COUNTER.incrementAndGet() /*3*/, COUNTER2.incrementAndGet(), "3333-3333","Whatsapp", EnumTipo.COMERCIAL));
+        listContatos.add(new Contato(COUNTER.incrementAndGet() /*4*/, COUNTER2.incrementAndGet(), "4444-4444","Whatsapp", EnumTipo.RESIDENCIAL));
+        listContatos.add(new Contato(COUNTER.incrementAndGet() /*5*/, COUNTER2.incrementAndGet(), "5555-5555","Telegram", EnumTipo.COMERCIAL));
     }
 
-    public static List<Contato> getListContatos() {
+    public Contato create(Integer id, Contato contato) {
+        contato.setIdPessoa(id);
+        contato.setIdContato(COUNTER.incrementAndGet());
+        listContatos.add(contato);
+        return contato;
+    }
+
+    public List<Contato> list() {
         return listContatos;
-    }
-
-    public AtomicInteger getCOUNTER2() {
-        return COUNTER2;
     }
 
 }

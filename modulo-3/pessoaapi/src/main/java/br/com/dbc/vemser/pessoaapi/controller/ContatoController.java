@@ -6,41 +6,40 @@ package br.com.dbc.vemser.pessoaapi.controller;
 import br.com.dbc.vemser.pessoaapi.entity.Contato;
 import br.com.dbc.vemser.pessoaapi.service.ContatoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
 @RequestMapping("/contato")
+@Validated
 public class ContatoController {
 
     @Autowired
     private ContatoService contatoService;
 
     @GetMapping
-    public List<Contato> list() {
-        return contatoService.list();
+    public ResponseEntity<List<Contato>> list() {
+        return ResponseEntity.ok(contatoService.list());
     }
 
     @GetMapping("/{idContato}")
-    public List<Contato> listById (@PathVariable("idContato") int id) {
-        return contatoService.listById(id);
-    }
-
-    @GetMapping("/bydescricao")
-    public List<Contato> listByDescricao(@RequestParam("descricao") String descricao) {
-        return contatoService.listByDescricao(descricao);
+    public ResponseEntity<List<Contato>> listById (@PathVariable("idContato") int id) throws Exception {
+        return ResponseEntity.ok(contatoService.listById(id));
     }
 
     @PostMapping("/{idPessoa}")
-    public Contato create(@PathVariable("idPessoa") Integer id, @RequestBody Contato contato) {
-        return contatoService.create(id, contato);
+    public ResponseEntity<Contato> create(@PathVariable("idPessoa") Integer id, @Valid @RequestBody Contato contato) throws Exception {
+        return ResponseEntity.ok(contatoService.create(id, contato));
     }
 
     @PutMapping("/{idContato}")
-    public Contato update(@PathVariable("idContato") Integer id,
-                         @RequestBody Contato contatoAtualizar) throws Exception {
-        return contatoService.update(id, contatoAtualizar);
+    public ResponseEntity<Contato> update(@PathVariable("idContato") Integer id,
+                          @Valid @RequestBody Contato contatoAtualizar) throws Exception {
+        return ResponseEntity.ok(contatoService.update(id, contatoAtualizar));
     }
 
     @DeleteMapping("/{idContato}")

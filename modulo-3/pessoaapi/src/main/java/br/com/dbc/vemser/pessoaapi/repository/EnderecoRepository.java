@@ -2,6 +2,7 @@ package br.com.dbc.vemser.pessoaapi.repository;
 
 import br.com.dbc.vemser.pessoaapi.entity.Endereco;
 import br.com.dbc.vemser.pessoaapi.entity.EnumTipo;
+import br.com.dbc.vemser.pessoaapi.entity.Pessoa;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -23,11 +24,14 @@ public class EnderecoRepository {
         listEnderecos.add(new Endereco(COUNTER.incrementAndGet() /*5*/, COUNTER2.incrementAndGet(),EnumTipo.RESIDENCIAL,"Rua Tuiuti",16,"Casa","55555-555","São Paulo","SP", "Brasil"));
     }
 
-    public static List<Endereco> getListEnderecos() {
-        return listEnderecos;
+    public Endereco create(Integer id, Endereco endereco) {
+        endereco.setIdPessoa(id);
+        endereco.setIdEndereco(COUNTER2.incrementAndGet());
+        listEnderecos.add(endereco);
+        return endereco;
     }
 
-    public AtomicInteger getCOUNTER2() {
-        return COUNTER2;
+    public List<Endereco> list() {
+        return listEnderecos;
     }
 }
