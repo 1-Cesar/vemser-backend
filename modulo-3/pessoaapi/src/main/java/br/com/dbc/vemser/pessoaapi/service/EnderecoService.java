@@ -3,6 +3,7 @@ package br.com.dbc.vemser.pessoaapi.service;
 
 import br.com.dbc.vemser.pessoaapi.entity.Endereco;
 import br.com.dbc.vemser.pessoaapi.entity.EnumTipo;
+import br.com.dbc.vemser.pessoaapi.exceptions.RegraDeNegocioException;
 import br.com.dbc.vemser.pessoaapi.repository.EnderecoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,7 +20,7 @@ public class EnderecoService {
     @Autowired
     private PessoaService pessoaService;
 
-    public Endereco create(Integer id, Endereco endereco) throws Exception {
+    public Endereco create(Integer id, Endereco endereco) throws RegraDeNegocioException {
         pessoaService.localizarPessoa(id);
         return enderecoRepository.create(id, endereco);
     }
@@ -29,7 +30,7 @@ public class EnderecoService {
     }
 
     public Endereco update(Integer id,
-                           Endereco enderecoAtualizar) throws Exception {
+                           Endereco enderecoAtualizar) throws RegraDeNegocioException {
         localizarEndereco(id);
         Endereco enderecoRecuperado = localizarEndereco(id);
         enderecoRecuperado.setTipo(enderecoAtualizar.getTipo());
@@ -44,7 +45,7 @@ public class EnderecoService {
         return enderecoRecuperado;
     }
 
-    public void delete(Integer id) throws Exception {
+    public void delete(Integer id) throws RegraDeNegocioException {
         localizarEndereco(id);
         Endereco enderecoRecuperado = localizarEndereco(id);
         enderecoRepository.list().remove(enderecoRecuperado);
@@ -56,25 +57,25 @@ public class EnderecoService {
                 .collect(Collectors.toList());
     }
 
-    public List<Endereco> listByIdEndereco(int id) throws Exception {
+    public List<Endereco> listByIdEndereco(int id) throws RegraDeNegocioException {
         localizarEndereco(id);
         return enderecoRepository.list().stream()
                 .filter(endereco -> endereco.getIdEndereco().equals(id))
                 .collect(Collectors.toList());
     }
 
-    public List<Endereco> listByIdPessoa(int id) throws Exception {
+    public List<Endereco> listByIdPessoa(int id) throws RegraDeNegocioException {
         pessoaService.localizarPessoa(id);
         return enderecoRepository.list().stream()
                 .filter(endereco -> endereco.getIdPessoa().equals(id))
                 .collect(Collectors.toList());
     }
 
-    public Endereco localizarEndereco (Integer idEndereco) throws Exception {
+    public Endereco localizarEndereco (Integer idEndereco) throws RegraDeNegocioException {
         Endereco enderecoRecuperado = enderecoRepository.list().stream()
                 .filter(endereco -> endereco.getIdEndereco().equals(idEndereco))
                 .findFirst()
-                .orElseThrow(() -> new Exception("Endereço não localizado"));
+                .orElseThrow(() -> new RegraDeNegocioException("Endereço não localizado"));
         return enderecoRecuperado;
     }
 }

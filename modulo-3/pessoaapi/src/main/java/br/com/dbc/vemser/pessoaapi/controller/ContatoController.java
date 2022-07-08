@@ -4,6 +4,7 @@ package br.com.dbc.vemser.pessoaapi.controller;
  * @version vemSer - DBC
  */
 import br.com.dbc.vemser.pessoaapi.entity.Contato;
+import br.com.dbc.vemser.pessoaapi.exceptions.RegraDeNegocioException;
 import br.com.dbc.vemser.pessoaapi.service.ContatoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -27,23 +28,23 @@ public class ContatoController {
     }
 
     @GetMapping("/{idContato}")
-    public ResponseEntity<List<Contato>> listById (@PathVariable("idContato") int id) throws Exception {
+    public ResponseEntity<List<Contato>> listById (@PathVariable("idContato") int id) throws RegraDeNegocioException {
         return ResponseEntity.ok(contatoService.listById(id));
     }
 
     @PostMapping("/{idPessoa}")
-    public ResponseEntity<Contato> create(@PathVariable("idPessoa") Integer id, @Valid @RequestBody Contato contato) throws Exception {
+    public ResponseEntity<Contato> create(@PathVariable("idPessoa") Integer id, @Valid @RequestBody Contato contato) throws RegraDeNegocioException {
         return ResponseEntity.ok(contatoService.create(id, contato));
     }
 
     @PutMapping("/{idContato}")
     public ResponseEntity<Contato> update(@PathVariable("idContato") Integer id,
-                          @Valid @RequestBody Contato contatoAtualizar) throws Exception {
+                          @Valid @RequestBody Contato contatoAtualizar) throws RegraDeNegocioException {
         return ResponseEntity.ok(contatoService.update(id, contatoAtualizar));
     }
 
     @DeleteMapping("/{idContato}")
-    public void delete(@PathVariable("idContato") Integer id) throws Exception {
+    public void delete(@PathVariable("idContato") Integer id) throws RegraDeNegocioException {
         contatoService.delete(id);
     }
 }

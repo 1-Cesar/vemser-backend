@@ -28,12 +28,12 @@ public class EnderecoController {
     }
 
     @GetMapping("/{idEndereco}")
-    public ResponseEntity<List<Endereco>> listByIdEndereco (@PathVariable("idEndereco") int id) throws Exception {
+    public ResponseEntity<List<Endereco>> listByIdEndereco (@PathVariable("idEndereco") int id) throws RegraDeNegocioException {
         return ResponseEntity.ok(enderecoService.listByIdEndereco(id));
     }
 
     @GetMapping("/{idPessoa}/pessoa")
-    public ResponseEntity<List<Endereco>> listByIdPessoa (@PathVariable("idPessoa") int id) throws Exception {
+    public ResponseEntity<List<Endereco>> listByIdPessoa (@PathVariable("idPessoa") int id) throws RegraDeNegocioException {
         return ResponseEntity.ok(enderecoService.listByIdPessoa(id));
     }
 
@@ -43,18 +43,18 @@ public class EnderecoController {
     }
 
     @PostMapping("/{idPessoa}")
-    public ResponseEntity<Endereco> create(@PathVariable("idPessoa") Integer id, @Valid @RequestBody Endereco endereco) throws Exception {
+    public ResponseEntity<Endereco> create(@PathVariable("idPessoa") Integer id, @Valid @RequestBody Endereco endereco) throws RegraDeNegocioException {
         return ResponseEntity.ok(enderecoService.create(id, endereco));
     }
 
     @PutMapping("/{idEndereco}")
     public ResponseEntity<Endereco> update(@PathVariable("idEndereco") Integer id,
-                           @Valid @RequestBody Endereco enderecoAtualizar) throws Exception {
+                           @Valid @RequestBody Endereco enderecoAtualizar) throws RegraDeNegocioException {
         return ResponseEntity.ok(enderecoService.update(id, enderecoAtualizar));
     }
 
     @DeleteMapping("/{idEndereco}")
-    public void delete(@PathVariable("idEndereco") Integer id) throws Exception {
+    public void delete(@PathVariable("idEndereco") Integer id) throws RegraDeNegocioException {
         enderecoService.delete(id);
     }
 

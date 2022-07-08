@@ -2,6 +2,7 @@ package br.com.dbc.vemser.pessoaapi.controller;
 
 import br.com.dbc.vemser.pessoaapi.config.PropertieReader;
 import br.com.dbc.vemser.pessoaapi.entity.Pessoa;
+import br.com.dbc.vemser.pessoaapi.exceptions.RegraDeNegocioException;
 import br.com.dbc.vemser.pessoaapi.repository.PessoaRepository;
 import br.com.dbc.vemser.pessoaapi.service.PessoaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +36,7 @@ public class PessoaController {
     }
 
     @GetMapping("/{idPessoa}")
-    public ResponseEntity<List<Pessoa>> listById (@PathVariable("idPessoa") int id) throws Exception {
+    public ResponseEntity<List<Pessoa>> listById (@PathVariable("idPessoa") int id) throws RegraDeNegocioException {
         return ResponseEntity.ok(pessoaService.listById(id));
     }
 
@@ -45,19 +46,19 @@ public class PessoaController {
     }
 
     @PostMapping
-    public ResponseEntity<Pessoa> create(@Valid @RequestBody Pessoa pessoa) {
+    public ResponseEntity<Pessoa> create(@Valid @RequestBody Pessoa pessoa) throws RegraDeNegocioException {
         return ResponseEntity.ok(pessoaService.create(pessoa));
         //return new ResponseEntity<>(pessoaService.create(pessoa), HttpStatus.I_AM_TEAPOT
     }
 
     @PutMapping("/{idPessoa}")
     public ResponseEntity<Pessoa> update(@PathVariable("idPessoa") Integer id,
-                         @Valid @RequestBody Pessoa pessoaAtualizar) throws Exception {
+                         @Valid @RequestBody Pessoa pessoaAtualizar) throws RegraDeNegocioException {
         return ResponseEntity.ok(pessoaService.update(id, pessoaAtualizar));
     }
 
     @DeleteMapping("/{idPessoa}")
-    public void delete(@PathVariable("idPessoa") Integer id) throws Exception {
+    public void delete(@PathVariable("idPessoa") Integer id) throws RegraDeNegocioException {
         pessoaService.delete(id);
     }
 }

@@ -1,6 +1,7 @@
 package br.com.dbc.vemser.pessoaapi.service;
 
 import br.com.dbc.vemser.pessoaapi.entity.Pessoa;
+import br.com.dbc.vemser.pessoaapi.exceptions.RegraDeNegocioException;
 import br.com.dbc.vemser.pessoaapi.repository.PessoaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,7 +25,7 @@ public class PessoaService {
     }
 
     public Pessoa update(Integer id,
-                         Pessoa pessoaAtualizar) throws Exception {
+                         Pessoa pessoaAtualizar) throws RegraDeNegocioException {
         Pessoa pessoaRecuperada = localizarPessoa(id);
         pessoaRecuperada.setCpf(pessoaAtualizar.getCpf());
         pessoaRecuperada.setNome(pessoaAtualizar.getNome());
@@ -32,12 +33,12 @@ public class PessoaService {
         return pessoaRecuperada;
     }
 
-    public void delete(Integer id) throws Exception {
+    public void delete(Integer id) throws RegraDeNegocioException {
         Pessoa pessoaRecuperada = localizarPessoa(id);
         pessoaRepository.list().remove(pessoaRecuperada);
     }
 
-    public List<Pessoa> listById(int id) throws Exception {
+    public List<Pessoa> listById(int id) throws RegraDeNegocioException {
         localizarPessoa(id);
         return pessoaRepository.list().stream()
                 .filter(pessoa -> pessoa.getIdPessoa().equals(id))
@@ -50,11 +51,11 @@ public class PessoaService {
                 .collect(Collectors.toList());
     }
 
-    public Pessoa localizarPessoa (Integer idPessoa) throws Exception {
+    public Pessoa localizarPessoa (Integer idPessoa) throws RegraDeNegocioException {
         Pessoa pessoaRecuperada = pessoaRepository.list().stream()
                 .filter(pessoa -> pessoa.getIdPessoa().equals(idPessoa))
                 .findFirst()
-                .orElseThrow(() -> new Exception("Pessoa não encontrada"));
+                .orElseThrow(() -> new RegraDeNegocioException("Pessoa não encontrada"));
         return pessoaRecuperada;
     }
 }

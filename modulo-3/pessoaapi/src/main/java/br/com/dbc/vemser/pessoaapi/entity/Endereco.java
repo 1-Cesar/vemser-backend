@@ -11,7 +11,7 @@ public class Endereco {
 
     private Integer idEndereco;
 
-    @NotBlank
+    @NotNull(message = "informe o tipo do endereço (RESIDENCIAL ou COMERCIAL)")
     private EnumTipo tipo;
 
     @NotBlank

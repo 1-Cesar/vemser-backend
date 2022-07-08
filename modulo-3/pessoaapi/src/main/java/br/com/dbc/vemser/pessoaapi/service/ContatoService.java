@@ -4,6 +4,7 @@ package br.com.dbc.vemser.pessoaapi.service;
  * @version vemSer - DBC
  */
 import br.com.dbc.vemser.pessoaapi.entity.Contato;
+import br.com.dbc.vemser.pessoaapi.exceptions.RegraDeNegocioException;
 import br.com.dbc.vemser.pessoaapi.repository.ContatoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,7 +21,7 @@ public class ContatoService {
     @Autowired
     private PessoaService pessoaService;
 
-    public Contato create(Integer id, Contato contato) throws Exception {
+    public Contato create(Integer id, Contato contato) throws RegraDeNegocioException {
         pessoaService.localizarPessoa(id);
         return contatoRepository.create(id, contato);
     }
@@ -30,7 +31,7 @@ public class ContatoService {
     }
 
     public Contato update(Integer id,
-                          Contato contatoAtualizar) throws Exception {
+                          Contato contatoAtualizar) throws RegraDeNegocioException {
         localizarContato(id);
         Contato contatoRecuperado = localizarContato(id);
         contatoRecuperado.setNumero(contatoAtualizar.getNumero());
@@ -39,24 +40,24 @@ public class ContatoService {
         return contatoRecuperado;
     }
 
-    public void delete(Integer id) throws Exception {
+    public void delete(Integer id) throws RegraDeNegocioException {
         localizarContato(id);
         Contato contatoRecuperado = localizarContato(id);
         contatoRepository.list().remove(contatoRecuperado);
     }
 
-    public List<Contato> listById(int id) throws Exception {
+    public List<Contato> listById(int id) throws RegraDeNegocioException {
         localizarContato(id);
         return contatoRepository.list().stream()
                 .filter(contato -> contato.getIdContato().equals(id))
                 .collect(Collectors.toList());
     }
 
-    public Contato localizarContato(Integer idContato) throws Exception {
+    public Contato localizarContato(Integer idContato) throws RegraDeNegocioException {
         Contato contatoRecuperado = contatoRepository.list().stream()
                 .filter(contato -> contato.getIdContato().equals(idContato))
                 .findFirst()
-                .orElseThrow(() -> new Exception("Contato não localizado"));
+                .orElseThrow(() -> new RegraDeNegocioException("Contato não localizado"));
         return contatoRecuperado;
     }
 }
