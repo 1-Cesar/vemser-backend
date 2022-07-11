@@ -19,7 +19,7 @@ public enum EnumTipo {
         }
 
         public void setTipo(Integer tipo) {
-            this.tipo = tipo;
-        }
+        this.tipo = tipo;
+    }
 }
 
