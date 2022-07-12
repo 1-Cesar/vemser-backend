@@ -4,11 +4,13 @@ import br.com.dbc.vemser.pessoaapi.config.PropertieReader;
 import br.com.dbc.vemser.pessoaapi.dto.PessoaCreateDTO;
 import br.com.dbc.vemser.pessoaapi.dto.PessoaDTO;
 import br.com.dbc.vemser.pessoaapi.exceptions.RegraDeNegocioException;
+import br.com.dbc.vemser.pessoaapi.service.EmailService;
 import br.com.dbc.vemser.pessoaapi.service.PessoaService;
 
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -28,10 +30,22 @@ public class PessoaController {
     @Autowired
     private PropertieReader propertieReader;
 
+    @Autowired
+    private EmailService emailService;
+
     @GetMapping("/ambiente")
     public String teste() {
         return propertieReader.getAmbiente();
     }
+
+    @Value("${ola}")
+    private String app;
+
+    /*@GetMapping("/email")
+    public String email() {
+        emailService.setEmailSender();
+        return "Olá " + app + "!";
+    }*/
 
     @GetMapping
     public ResponseEntity<List<PessoaDTO>> list() {
@@ -48,6 +62,7 @@ public class PessoaController {
     @PostMapping
     public ResponseEntity<PessoaCreateDTO> create(@Valid @RequestBody PessoaCreateDTO pessoa) {
         log.info("Criando uma pessoa");
+        //emailService.setEmailSender();
         return ResponseEntity.ok(pessoaService.create(pessoa));
         //return new ResponseEntity<>(pessoaService.create(pessoa), HttpStatus.I_AM_TEAPOT
     }

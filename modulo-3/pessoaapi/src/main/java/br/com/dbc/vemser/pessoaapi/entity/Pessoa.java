@@ -25,4 +25,8 @@ public class Pessoa {
     @CPF
     @Size(min = 11, max = 11, message = "CPF: digite seu CPF sem pontos ou traços")
     private String cpf;
+
+    @NotBlank
+    @Email
+    private String email;
 }

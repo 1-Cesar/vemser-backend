@@ -2,7 +2,9 @@ package br.com.dbc.vemser.pessoaapi.service;
 
 import br.com.dbc.vemser.pessoaapi.dto.EnderecoCreateDTO;
 import br.com.dbc.vemser.pessoaapi.dto.EnderecoDTO;
+import br.com.dbc.vemser.pessoaapi.dto.PessoaDTO;
 import br.com.dbc.vemser.pessoaapi.entity.Endereco;
+import br.com.dbc.vemser.pessoaapi.entity.Pessoa;
 import br.com.dbc.vemser.pessoaapi.exceptions.RegraDeNegocioException;
 import br.com.dbc.vemser.pessoaapi.repository.EnderecoRepository;
 
@@ -29,6 +31,9 @@ public class EnderecoService {
     @Autowired
     private ObjectMapper objectMapper;
 
+    @Autowired
+    private EmailService emailService;
+
     public List<EnderecoDTO> list(){
         return enderecoRepository.list().stream()
                 .map(endereco -> objectMapper.convertValue(endereco, EnderecoDTO.class))
@@ -52,14 +57,16 @@ public class EnderecoService {
     }
 
     public EnderecoCreateDTO create(Integer id, EnderecoCreateDTO endereco) throws RegraDeNegocioException {
-        pessoaService.localizarPessoa(id);
+        Pessoa nome = pessoaService.localizarPessoa(id);
+        emailService.nome = nome;
         Endereco idEndereco = enderecoRepository.create(id, objectMapper.convertValue(endereco, Endereco.class));
-        return objectMapper.convertValue(idEndereco, EnderecoDTO.class);
+        return (EnderecoCreateDTO) emailService.sendEmail(objectMapper.convertValue(idEndereco, EnderecoDTO.class),4);
     }
 
     public EnderecoDTO update(Integer id,
                            EnderecoDTO enderecoAtualizar) throws RegraDeNegocioException {
         Endereco enderecoRecuperado = localizarEndereco(id);
+        Pessoa nome = pessoaService.localizarPessoa(enderecoRecuperado.getIdPessoa());
         enderecoRecuperado.setTipo(enderecoAtualizar.getTipo());
         enderecoRecuperado.setLogradouro(enderecoAtualizar.getLogradouro());
         enderecoRecuperado.setNumero(enderecoAtualizar.getNumero());
@@ -68,12 +75,15 @@ public class EnderecoService {
         enderecoRecuperado.setCidade(enderecoAtualizar.getCidade());
         enderecoRecuperado.setEstado(enderecoAtualizar.getEstado());
         enderecoRecuperado.setPais(enderecoAtualizar.getPais());
-
-        return objectMapper.convertValue(enderecoRecuperado, EnderecoDTO.class);
+        emailService.nome = nome;
+        return (EnderecoDTO) emailService.sendEmail(objectMapper.convertValue(enderecoRecuperado, EnderecoDTO.class),2);
     }
 
     public void delete(Integer id) throws RegraDeNegocioException {
         Endereco enderecoRecuperado = localizarEndereco(id);
+        Pessoa nome = pessoaService.localizarPessoa(enderecoRecuperado.getIdPessoa());
+        emailService.nome = nome;
+        emailService.sendEmail(objectMapper.convertValue(enderecoRecuperado, EnderecoDTO.class),5);
         enderecoRepository.list().remove(enderecoRecuperado);
     }
 
