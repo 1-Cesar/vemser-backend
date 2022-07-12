@@ -45,7 +45,8 @@ public class PessoaService {
     public PessoaCreateDTO create(PessoaCreateDTO pessoa) {
         Pessoa id = pessoaRepository.create(objectMapper.convertValue(pessoa, Pessoa.class));
         //emailService.setEmailSender(id);
-        return (PessoaCreateDTO) emailService.sendEmail(objectMapper.convertValue(id, PessoaDTO.class), 1);
+        emailService.sendEmail(objectMapper.convertValue(id, PessoaDTO.class), EnumEmail.CREATE);
+        return objectMapper.convertValue(id, PessoaDTO.class);
     }
 
     public PessoaDTO update(Integer id,
@@ -54,13 +55,13 @@ public class PessoaService {
         pessoaRecuperada.setCpf(pessoaAtualizar.getCpf());
         pessoaRecuperada.setNome(pessoaAtualizar.getNome());
         pessoaRecuperada.setDataNascimento(pessoaAtualizar.getDataNascimento());
-        emailService.nome = pessoaRecuperada;
-        return (PessoaDTO) emailService.sendEmail(objectMapper.convertValue(pessoaRecuperada, PessoaDTO.class),2);
+        emailService.sendEmail(objectMapper.convertValue(pessoaRecuperada, PessoaDTO.class), EnumEmail.PUT);
+        return objectMapper.convertValue(pessoaRecuperada, PessoaDTO.class);
     }
 
     public void delete(Integer id) throws RegraDeNegocioException {
         Pessoa pessoaRecuperada = localizarPessoa(id);
-        emailService.sendEmail(objectMapper.convertValue(pessoaRecuperada, PessoaDTO.class),3);
+        emailService.sendEmail(objectMapper.convertValue(pessoaRecuperada, PessoaDTO.class),EnumEmail.DELETE);
         pessoaRepository.list().remove(pessoaRecuperada);
     }
 
