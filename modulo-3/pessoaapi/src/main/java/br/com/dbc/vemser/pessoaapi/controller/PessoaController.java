@@ -7,6 +7,8 @@ import br.com.dbc.vemser.pessoaapi.exceptions.RegraDeNegocioException;
 import br.com.dbc.vemser.pessoaapi.service.EmailService;
 import br.com.dbc.vemser.pessoaapi.service.PessoaService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +26,8 @@ import java.util.List;
 @Validated
 public class PessoaController {
 
+
+
     @Autowired
     private PessoaService pessoaService;
 
@@ -33,19 +37,13 @@ public class PessoaController {
     @Autowired
     private EmailService emailService;
 
-    @GetMapping("/ambiente")
+    /*@GetMapping("/ambiente")
     public String teste() {
         return propertieReader.getAmbiente();
-    }
+    }*/
 
     @Value("${ola}")
     private String app;
-
-    /*@GetMapping("/email")
-    public String email() {
-        emailService.setEmailSender();
-        return "Olá " + app + "!";
-    }*/
 
     @GetMapping
     public ResponseEntity<List<PessoaDTO>> list() {
@@ -62,7 +60,6 @@ public class PessoaController {
     @PostMapping
     public ResponseEntity<PessoaCreateDTO> create(@Valid @RequestBody PessoaCreateDTO pessoa) {
         log.info("Criando uma pessoa");
-        //emailService.setEmailSender();
         return ResponseEntity.ok(pessoaService.create(pessoa));
         //return new ResponseEntity<>(pessoaService.create(pessoa), HttpStatus.I_AM_TEAPOT
     }
