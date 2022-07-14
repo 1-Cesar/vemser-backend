@@ -14,19 +14,21 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class PessoaCreateDTO {
 
+    @Schema(description = "nome da pessoa.", example = "Cesar")
     @NotEmpty
     private String nome;
 
+    @Schema(description = "data de nascimento da pessoa.", example = "1998-10-25")
     @NotNull
     @Past
     private LocalDate dataNascimento;
 
-    @Schema(example = "cpf sem pontos ou traços")
+    @Schema(description = "cpf da pessoa.", example = "xxxxxxxxxxx")
     @CPF
     @NotEmpty
     private String cpf;
 
-    @Schema(example = "email@email.com.br")
+    @Schema(description = "email@email.com.br", example = "cesar@gmail.com.br")
     @NotBlank
     @Email
     private String email;

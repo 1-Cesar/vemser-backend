@@ -15,17 +15,19 @@ import javax.validation.constraints.Size;
 @NoArgsConstructor
 public class ContatoCreateDTO {
 
+    @Schema(description = "id da pessoa", example = "1")
     private Integer idPessoa;
 
+    @Schema(description = "numero do contato", example = "11111111")
     @NotBlank
     @Size(min = 8, max = 13, message = "número inválido")
     private String numero;
 
-    @Schema(example = "whatsapp, telegram, etc.")
+    @Schema(description = "whatsapp, telegram, etc.", example = "Whatsapp")
     @NotBlank(message = "Descrição deve ser preencida (ex: whatsapp, telegram, observações, etc.)")
     private String descricao;
 
-    @Schema(example = "RESIDENCIAL OU COMERCIAL")
+    @Schema(description = "RESIDENCIAL OU COMERCIAL", example = "RESIDENCIAL")
     @NotNull(message = "informe o tipo do contato (RESIDENCIAL ou COMERCIAL)")
     private EnumTipo tipoContato;
 

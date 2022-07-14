@@ -60,7 +60,6 @@ public class OpenApiConfig {
                 apiResponses.addApiResponse("401", createApiResponse("Acesso não autorizado!"));
                 apiResponses.addApiResponse("404", createApiResponse("Não encontrado!"));
                 apiResponses.addApiResponse("500", createApiResponse("Erro na aplicação!"));
-
             }));
         };
     }

@@ -26,8 +26,6 @@ import java.util.List;
 @Validated
 public class PessoaController {
 
-
-
     @Autowired
     private PessoaService pessoaService;
 
@@ -45,18 +43,21 @@ public class PessoaController {
     @Value("${ola}")
     private String app;
 
+    @Operation(summary = "listar pessoas", description = "recupera todas as pessoas do banco de dados")
     @GetMapping
     public ResponseEntity<List<PessoaDTO>> list() {
         log.info("Mostrando todas as pessoas");
         return ResponseEntity.ok(pessoaService.list());
     }
 
+    @Operation(summary = "listar pessoa por id", description = "recupera uma pessoa do banco de dados atraves de seu id")
     @GetMapping("/{idPessoa}")
     public ResponseEntity<List<PessoaDTO>> listById (@PathVariable("idPessoa") int id) {
         log.info("Mostrando uma única pessoa por Id");
         return ResponseEntity.ok(pessoaService.listById(id));
     }
 
+    @Operation(summary = "criar pessoa", description = "cria uma pessoa dentro do banco de dados")
     @PostMapping
     public ResponseEntity<PessoaCreateDTO> create(@Valid @RequestBody PessoaCreateDTO pessoa) {
         log.info("Criando uma pessoa");
@@ -64,6 +65,7 @@ public class PessoaController {
         //return new ResponseEntity<>(pessoaService.create(pessoa), HttpStatus.I_AM_TEAPOT
     }
 
+    @Operation(summary = "altera uma pessoa por id", description = "altera os registros de uma pessoa no banco de dados atraves de seu id")
     @PutMapping("/{idPessoa}")
     public ResponseEntity<PessoaDTO> update(@PathVariable("idPessoa") Integer id,
                                          @Valid @RequestBody PessoaDTO pessoaAtualizar) throws RegraDeNegocioException {
@@ -71,6 +73,7 @@ public class PessoaController {
         return ResponseEntity.ok(pessoaService.update(id, pessoaAtualizar));
     }
 
+    @Operation(summary = "deleta pessoa", description = "deleta uma pessoa do banco de dados atraves de seu id")
     @DeleteMapping("/{idPessoa}")
     public void delete(@PathVariable("idPessoa") Integer id) throws RegraDeNegocioException {
         log.info("Deletando uma pessoa");
