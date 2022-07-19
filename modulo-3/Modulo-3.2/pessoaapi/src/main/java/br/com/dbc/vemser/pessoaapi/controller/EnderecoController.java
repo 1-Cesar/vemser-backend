@@ -39,12 +39,12 @@ public class EnderecoController {
         return ResponseEntity.ok(enderecoService.listByIdEndereco(id));
     }
 
-    @Operation(summary = "listar endereço por id da pessoa", description = "recupera um endereço do banco de dados atraves do id da pessoa")
+   /*@Operation(summary = "listar endereço por id da pessoa", description = "recupera um endereço do banco de dados atraves do id da pessoa")
     @GetMapping("/{idPessoa}/pessoa")
     public ResponseEntity<List<EnderecoDTO>> listByIdPessoa (@PathVariable("idPessoa") int id) throws RegraDeNegocioException {
         log.info("Mostrando um endereço filtrado por uma pessoa");
         return ResponseEntity.ok(enderecoService.listByIdPessoa(id));
-    }
+    }*/
 
     @Operation(summary = "criar endereço atraves do id da pessoa", description = "cria um endereço dentro do banco de dados com base no id da pessoa")
     @PostMapping("/{idPessoa}")

@@ -2,7 +2,7 @@ package br.com.dbc.vemser.pessoaapi.service;
 
 import br.com.dbc.vemser.pessoaapi.dto.PessoaCreateDTO;
 import br.com.dbc.vemser.pessoaapi.dto.PessoaDTO;
-import br.com.dbc.vemser.pessoaapi.entity.Pessoa;
+import br.com.dbc.vemser.pessoaapi.entity.PessoaEntity;
 import br.com.dbc.vemser.pessoaapi.exceptions.RegraDeNegocioException;
 import br.com.dbc.vemser.pessoaapi.repository.PessoaRepository;
 
@@ -30,47 +30,49 @@ public class PessoaService {
     private EmailService emailService;
 
     public List<PessoaDTO> list(){
-        return pessoaRepository.list().stream()
+        return pessoaRepository.findAll().stream()
                 .map(pessoa -> objectMapper.convertValue(pessoa, PessoaDTO.class))
                 .collect(Collectors.toList());
     }
 
     public List<PessoaDTO> listById(Integer idPessoa) {
-        return  pessoaRepository.list().stream()
+        return  pessoaRepository.findById(idPessoa).stream()
                 .filter(pessoa -> pessoa.getIdPessoa().equals(idPessoa))
                 .map(pessoa -> objectMapper.convertValue(pessoa, PessoaDTO.class))
                 .collect(Collectors.toList());
     }
 
-    public PessoaCreateDTO create(PessoaCreateDTO pessoa) {
-        Pessoa id = pessoaRepository.create(objectMapper.convertValue(pessoa, Pessoa.class));
-        //emailService.setEmailSender(id);
+    public PessoaDTO create(PessoaCreateDTO pessoa) {
+        PessoaEntity id = pessoaRepository.save(objectMapper.convertValue(pessoa, PessoaEntity.class));
         emailService.sendEmail(objectMapper.convertValue(id, PessoaDTO.class), EnumEmail.CREATE);
         return objectMapper.convertValue(id, PessoaDTO.class);
     }
 
     public PessoaDTO update(Integer id,
                          PessoaDTO pessoaAtualizar) throws RegraDeNegocioException {
-        Pessoa pessoaRecuperada = localizarPessoa(id);
+        PessoaEntity pessoaRecuperada = localizarPessoa(id);
+
         pessoaRecuperada.setCpf(pessoaAtualizar.getCpf());
         pessoaRecuperada.setNome(pessoaAtualizar.getNome());
+        pessoaRecuperada.setEmail(pessoaAtualizar.getEmail());
         pessoaRecuperada.setDataNascimento(pessoaAtualizar.getDataNascimento());
+
         emailService.sendEmail(objectMapper.convertValue(pessoaRecuperada, PessoaDTO.class), EnumEmail.PUT);
-        return objectMapper.convertValue(pessoaRecuperada, PessoaDTO.class);
+        return objectMapper.convertValue(pessoaRepository.save(pessoaRecuperada), PessoaDTO.class);
     }
 
     public void delete(Integer id) throws RegraDeNegocioException {
-        Pessoa pessoaRecuperada = localizarPessoa(id);
+        PessoaEntity pessoaRecuperada = localizarPessoa(id);
+
         emailService.sendEmail(objectMapper.convertValue(pessoaRecuperada, PessoaDTO.class),EnumEmail.DELETE);
-        pessoaRepository.list().remove(pessoaRecuperada);
+        pessoaRepository.delete(pessoaRecuperada);
     }
 
-    public Pessoa localizarPessoa (Integer idPessoa) throws RegraDeNegocioException {
+    public PessoaEntity localizarPessoa (Integer idPessoa) throws RegraDeNegocioException {
         log.info("Verificando se existe registro de Pessoa.....");
-        Pessoa pessoaRecuperada = pessoaRepository.list().stream()
+        return pessoaRepository.findAll().stream()
                 .filter(pessoa -> pessoa.getIdPessoa().equals(idPessoa))
                 .findFirst()
                 .orElseThrow(() -> new RegraDeNegocioException("Pessoa não encontrada"));
-        return pessoaRecuperada;
     }
 }

@@ -8,7 +8,6 @@ import br.com.dbc.vemser.pessoaapi.service.EmailService;
 import br.com.dbc.vemser.pessoaapi.service.PessoaService;
 
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,7 +51,7 @@ public class PessoaController {
 
     @Operation(summary = "listar pessoa por id", description = "recupera uma pessoa do banco de dados atraves de seu id")
     @GetMapping("/{idPessoa}")
-    public ResponseEntity<List<PessoaDTO>> listById (@PathVariable("idPessoa") int id) {
+    public ResponseEntity<List<PessoaDTO>> listById (@PathVariable("idPessoa") int id) throws RegraDeNegocioException {
         log.info("Mostrando uma única pessoa por Id");
         return ResponseEntity.ok(pessoaService.listById(id));
     }
