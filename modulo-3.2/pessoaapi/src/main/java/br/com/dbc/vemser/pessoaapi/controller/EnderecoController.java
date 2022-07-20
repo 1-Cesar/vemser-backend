@@ -2,7 +2,11 @@ package br.com.dbc.vemser.pessoaapi.controller;
 
 import br.com.dbc.vemser.pessoaapi.dto.EnderecoCreateDTO;
 import br.com.dbc.vemser.pessoaapi.dto.EnderecoDTO;
+import br.com.dbc.vemser.pessoaapi.entity.ContatoEntity;
+import br.com.dbc.vemser.pessoaapi.entity.EnderecoEntity;
+import br.com.dbc.vemser.pessoaapi.entity.PessoaEntity;
 import br.com.dbc.vemser.pessoaapi.exceptions.RegraDeNegocioException;
+import br.com.dbc.vemser.pessoaapi.repository.EnderecoRepository;
 import br.com.dbc.vemser.pessoaapi.service.EnderecoService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -14,6 +18,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Collection;
 import java.util.List;
 
 @Slf4j
@@ -24,6 +29,9 @@ public class EnderecoController {
 
     @Autowired
     private EnderecoService enderecoService;
+
+    @Autowired
+    private EnderecoRepository enderecoRepository;
 
     @Operation(summary = "listar endereços", description = "recupera todos os endereços do banco de dados")
     @GetMapping
@@ -39,16 +47,16 @@ public class EnderecoController {
         return ResponseEntity.ok(enderecoService.listByIdEndereco(id));
     }
 
-   /*@Operation(summary = "listar endereço por id da pessoa", description = "recupera um endereço do banco de dados atraves do id da pessoa")
+   @Operation(summary = "listar endereço por id da pessoa", description = "recupera um endereço do banco de dados atraves do id da pessoa")
     @GetMapping("/{idPessoa}/pessoa")
     public ResponseEntity<List<EnderecoDTO>> listByIdPessoa (@PathVariable("idPessoa") int id) throws RegraDeNegocioException {
         log.info("Mostrando um endereço filtrado por uma pessoa");
         return ResponseEntity.ok(enderecoService.listByIdPessoa(id));
-    }*/
+    }
 
     @Operation(summary = "criar endereço atraves do id da pessoa", description = "cria um endereço dentro do banco de dados com base no id da pessoa")
     @PostMapping("/{idPessoa}")
-    public ResponseEntity<EnderecoCreateDTO> create(@PathVariable("idPessoa") Integer id, @Valid @RequestBody EnderecoCreateDTO endereco) throws RegraDeNegocioException {
+    public ResponseEntity<EnderecoDTO> create(@PathVariable("idPessoa") Integer id, @Valid @RequestBody EnderecoDTO endereco) throws RegraDeNegocioException {
         log.info("Criando um endereço");
         return ResponseEntity.ok(enderecoService.create(id, endereco));
     }

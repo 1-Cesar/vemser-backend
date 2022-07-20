@@ -3,7 +3,7 @@ package br.com.dbc.vemser.pessoaapi.service;
  * @author Cesar
  * @version vemSer - DBC
  */
-import br.com.dbc.vemser.pessoaapi.dto.ContatoCreateDTO;
+
 import br.com.dbc.vemser.pessoaapi.dto.ContatoDTO;
 import br.com.dbc.vemser.pessoaapi.entity.ContatoEntity;
 import br.com.dbc.vemser.pessoaapi.exceptions.RegraDeNegocioException;
@@ -34,7 +34,7 @@ public class ContatoService {
 
     public List<ContatoDTO> list() {
         return contatoRepository.findAll().stream()
-                .map(contato -> objectMapper.convertValue(contato, ContatoDTO.class))
+                .map(this::retornarDTO)
                 .collect(Collectors.toList());
     }
 
@@ -42,34 +42,37 @@ public class ContatoService {
         localizarContato(id);
         return contatoRepository.findById(id).stream()
                 .filter(contato -> contato.getIdContato().equals(id))
-                .map(contato -> objectMapper.convertValue(contato, ContatoDTO.class))
+                .map(this::retornarDTO)
                 .collect(Collectors.toList());
     }
 
-    public ContatoCreateDTO create(Integer id, ContatoCreateDTO contato) throws RegraDeNegocioException {
+    public ContatoDTO create(Integer id, ContatoDTO contatoDTO) throws RegraDeNegocioException {
         pessoaService.localizarPessoa(id);
+        contatoDTO.setIdPessoa(id);
 
-        contato.setIdPessoa(id);
-        ContatoEntity idContato = contatoRepository.save(objectMapper.convertValue(contato, ContatoEntity.class));
+        ContatoEntity contatoEntity = retornarContatoEntity(contatoDTO);
 
+        contatoRepository.save(contatoEntity);
 
-        return objectMapper.convertValue(idContato, ContatoDTO.class);
+        return retornarDTO(contatoEntity);
     }
 
     public ContatoDTO update(Integer id,
-                          ContatoDTO contatoAtualizar) throws RegraDeNegocioException {
-        ContatoEntity contatoRecuperado = localizarContato(id);
+                          ContatoDTO contatoDTO) throws RegraDeNegocioException {
+        ContatoEntity contatoEntity = localizarContato(id);
 
-        contatoRecuperado.setNumero(contatoAtualizar.getNumero());
-        contatoRecuperado.setDescricao(contatoAtualizar.getDescricao());
-        contatoRecuperado.setTipoContato(contatoAtualizar.getTipoContato());
+        contatoEntity.setNumero(contatoDTO.getNumero());
+        contatoEntity.setDescricao(contatoDTO.getDescricao());
+        contatoEntity.setTipoContato(contatoDTO.getTipoContato());
 
-        return objectMapper.convertValue(contatoRepository.save(contatoRecuperado), ContatoDTO.class);
+        contatoRepository.save(contatoEntity);
+
+        return retornarDTO(contatoEntity);
     }
 
     public void delete(Integer id) throws RegraDeNegocioException {
-        ContatoEntity contatoRecuperado = localizarContato(id);
-        contatoRepository.delete(contatoRecuperado);
+        ContatoEntity contatoEntity = localizarContato(id);
+        contatoRepository.delete(contatoEntity);
     }
 
     public ContatoEntity localizarContato(Integer idContato) throws RegraDeNegocioException {
@@ -78,5 +81,13 @@ public class ContatoService {
                 .filter(contato -> contato.getIdContato().equals(idContato))
                 .findFirst()
                 .orElseThrow(() -> new RegraDeNegocioException("Contato não localizado"));
+    }
+
+    public ContatoDTO retornarDTO (ContatoEntity contatoEntity) {
+        return objectMapper.convertValue(contatoEntity, ContatoDTO.class);
+    }
+
+    public ContatoEntity retornarContatoEntity (ContatoDTO contatoDTO) {
+        return objectMapper.convertValue(contatoDTO, ContatoEntity.class);
     }
 }

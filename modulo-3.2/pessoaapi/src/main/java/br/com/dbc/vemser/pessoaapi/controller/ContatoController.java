@@ -3,7 +3,7 @@ package br.com.dbc.vemser.pessoaapi.controller;
  * @author Cesar
  * @version vemSer - DBC
  */
-import br.com.dbc.vemser.pessoaapi.dto.ContatoCreateDTO;
+
 import br.com.dbc.vemser.pessoaapi.dto.ContatoDTO;
 import br.com.dbc.vemser.pessoaapi.exceptions.RegraDeNegocioException;
 import br.com.dbc.vemser.pessoaapi.service.ContatoService;
@@ -44,9 +44,9 @@ public class ContatoController {
 
     @Operation(summary = "criar contato atraves do id da pessoa", description = "cria um contato dentro do banco de dados com base no id da pessoa")
     @PostMapping("/{idPessoa}")
-    public ResponseEntity<ContatoCreateDTO> create(@PathVariable("idPessoa") Integer id, @Valid @RequestBody ContatoCreateDTO contato) throws RegraDeNegocioException {
+    public ResponseEntity<ContatoDTO> create(@PathVariable("idPessoa") Integer id, @Valid @RequestBody ContatoDTO contato) throws RegraDeNegocioException {
         log.info("Criando um contato");
-        return ResponseEntity.ok(contatoService.create(id, contato));
+        return ResponseEntity.ok(contatoService.create(id,contato));
     }
 
     @Operation(summary = "altera um contato por id", description = "altera os registros de um contato no banco de dados atraves de seu id")
