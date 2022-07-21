@@ -1,6 +1,6 @@
 package br.com.dbc.vemser.pessoaapi.service;
 
-import br.com.dbc.vemser.pessoaapi.client.DadosPessoaisClient;
+import br.com.dbc.vemser.pessoaapi.config.client.DadosPessoaisClient;
 import br.com.dbc.vemser.pessoaapi.dto.DadosPessoaisDto;
 
 import br.com.dbc.vemser.pessoaapi.exceptions.RegraDeNegocioException;

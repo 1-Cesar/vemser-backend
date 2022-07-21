@@ -1,4 +1,4 @@
-package br.com.dbc.vemser.pessoaapi.client;
+package br.com.dbc.vemser.pessoaapi.config.client;
 
 
 import br.com.dbc.vemser.pessoaapi.dto.DadosPessoaisDto;

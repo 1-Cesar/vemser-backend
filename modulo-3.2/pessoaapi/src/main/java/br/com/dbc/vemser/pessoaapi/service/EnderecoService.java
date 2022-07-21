@@ -1,5 +1,6 @@
 package br.com.dbc.vemser.pessoaapi.service;
 
+import br.com.dbc.vemser.pessoaapi.dto.EnderecoCreateDTO;
 import br.com.dbc.vemser.pessoaapi.dto.EnderecoDTO;
 
 import br.com.dbc.vemser.pessoaapi.entity.EnderecoEntity;
@@ -49,21 +50,21 @@ public class EnderecoService {
                 .collect(Collectors.toList());
     }
 
-    public List<EnderecoDTO> listByIdPessoa(int id) throws RegraDeNegocioException {
-        pessoaService.localizarPessoa(id);
-        return enderecoRepository.findById(id).stream()
-                .filter(endereco -> endereco.getIdEndereco().equals(id))
-                .map(endereco -> objectMapper.convertValue(endereco, EnderecoDTO.class))
-                .collect(Collectors.toList());
+    public List<EnderecoDTO> listByIdPessoa(Integer id) throws RegraDeNegocioException {
+        PessoaEntity pessoaEntity = pessoaService.localizarPessoa(id);
+        return enderecoRepository.findAll().stream()
+                .filter(endereco -> endereco.getPessoas().contains(pessoaEntity))
+                .map(this::retornarDTO)
+                .toList();
     }
 
-    public EnderecoDTO create(Integer id, EnderecoDTO enderecoDTO) throws RegraDeNegocioException {
+    public EnderecoDTO create(Integer id, EnderecoCreateDTO enderecoDTO) throws RegraDeNegocioException {
         PessoaEntity pessoaEntity = pessoaService.localizarPessoa(id);
+        EnderecoEntity enderecoEntity = retornarEnderecoEntity(enderecoDTO);
 
         List<PessoaEntity> pessoas = new ArrayList<>();
         pessoas.add(pessoaEntity);
 
-        EnderecoEntity enderecoEntity = retornarEnderecoEntity(enderecoDTO);
         enderecoEntity.setPessoas(pessoas);
 
         enderecoRepository.save(enderecoEntity);
@@ -83,15 +84,6 @@ public class EnderecoService {
         enderecoEntity.setCidade(enderecoDTO.getCidade());
         enderecoEntity.setEstado(enderecoDTO.getEstado());
         enderecoEntity.setPais(enderecoDTO.getPais());
-
-        PessoaEntity pessoaEntity = pessoaService.localizarPessoa(id);
-
-        List<PessoaEntity> pessoas = new ArrayList<>();
-        pessoas.add(pessoaEntity);
-
-        enderecoEntity = retornarEnderecoEntity(enderecoDTO);
-
-        enderecoEntity.setPessoas(pessoas);
 
         enderecoRepository.save(enderecoEntity);
 
@@ -115,7 +107,7 @@ public class EnderecoService {
         return objectMapper.convertValue(enderecoEntity, EnderecoDTO.class);
     }
 
-    public EnderecoEntity retornarEnderecoEntity (EnderecoDTO enderecoDTO) {
+    public EnderecoEntity retornarEnderecoEntity (EnderecoCreateDTO enderecoDTO) {
         return objectMapper.convertValue(enderecoDTO, EnderecoEntity.class);
     }
 }

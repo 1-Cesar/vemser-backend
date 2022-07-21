@@ -2,7 +2,6 @@ package br.com.dbc.vemser.pessoaapi.dto;
 
 import br.com.dbc.vemser.pessoaapi.entity.PessoaEntity;
 import br.com.dbc.vemser.pessoaapi.entity.TipoPet;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,7 +13,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 public class PetCreateDTO {
 
-    private Integer idPessoa;
+    //private Integer idPessoa;
 
     private String nome;
 

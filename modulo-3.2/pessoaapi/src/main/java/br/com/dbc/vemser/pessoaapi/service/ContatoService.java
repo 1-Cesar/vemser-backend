@@ -4,8 +4,10 @@ package br.com.dbc.vemser.pessoaapi.service;
  * @version vemSer - DBC
  */
 
+import br.com.dbc.vemser.pessoaapi.dto.ContatoCreateDTO;
 import br.com.dbc.vemser.pessoaapi.dto.ContatoDTO;
 import br.com.dbc.vemser.pessoaapi.entity.ContatoEntity;
+import br.com.dbc.vemser.pessoaapi.entity.PessoaEntity;
 import br.com.dbc.vemser.pessoaapi.exceptions.RegraDeNegocioException;
 import br.com.dbc.vemser.pessoaapi.repository.ContatoRepository;
 
@@ -46,11 +48,11 @@ public class ContatoService {
                 .collect(Collectors.toList());
     }
 
-    public ContatoDTO create(Integer id, ContatoDTO contatoDTO) throws RegraDeNegocioException {
-        pessoaService.localizarPessoa(id);
-        contatoDTO.setIdPessoa(id);
-
+    public ContatoDTO create(Integer id, ContatoCreateDTO contatoDTO) throws RegraDeNegocioException {
+        PessoaEntity pessoaEntity = pessoaService.localizarPessoa(id);
         ContatoEntity contatoEntity = retornarContatoEntity(contatoDTO);
+
+        contatoEntity.setPessoa(pessoaEntity);
 
         contatoRepository.save(contatoEntity);
 
@@ -58,12 +60,12 @@ public class ContatoService {
     }
 
     public ContatoDTO update(Integer id,
-                          ContatoDTO contatoDTO) throws RegraDeNegocioException {
+                          ContatoCreateDTO contatoCreateDTO) throws RegraDeNegocioException {
         ContatoEntity contatoEntity = localizarContato(id);
 
-        contatoEntity.setNumero(contatoDTO.getNumero());
-        contatoEntity.setDescricao(contatoDTO.getDescricao());
-        contatoEntity.setTipoContato(contatoDTO.getTipoContato());
+        contatoEntity.setNumero(contatoCreateDTO.getNumero());
+        contatoEntity.setDescricao(contatoCreateDTO.getDescricao());
+        contatoEntity.setTipoContato(contatoCreateDTO.getTipoContato());
 
         contatoRepository.save(contatoEntity);
 
@@ -87,7 +89,7 @@ public class ContatoService {
         return objectMapper.convertValue(contatoEntity, ContatoDTO.class);
     }
 
-    public ContatoEntity retornarContatoEntity (ContatoDTO contatoDTO) {
+    public ContatoEntity retornarContatoEntity (ContatoCreateDTO contatoDTO) {
         return objectMapper.convertValue(contatoDTO, ContatoEntity.class);
     }
 }

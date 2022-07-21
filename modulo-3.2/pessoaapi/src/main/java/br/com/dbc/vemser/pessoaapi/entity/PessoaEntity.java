@@ -45,17 +45,17 @@ public class PessoaEntity implements Serializable {
             mappedBy = "pessoa",
             cascade = CascadeType.ALL,
             orphanRemoval = true)
-    private Set<ContatoEntity> contatos;
+    private List<ContatoEntity> contatos;
 
     @JsonIgnore
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name = "PESSOA_X_PESSOA_ENDERECO",
                 joinColumns = @JoinColumn(name = "ID_PESSOA"),
                 inverseJoinColumns = @JoinColumn(name = "ID_ENDERECO"))
     private List<EnderecoEntity> enderecos;
 
     @JsonIgnore
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "id_pessoa", referencedColumnName = "id_pessoa")
     private PetEntity pet;
 }

@@ -1,5 +1,6 @@
 package br.com.dbc.vemser.pessoaapi.dto;
 
+import br.com.dbc.vemser.pessoaapi.entity.PetEntity;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -8,6 +9,7 @@ import org.hibernate.validator.constraints.br.CPF;
 
 import javax.validation.constraints.*;
 import java.time.LocalDate;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -32,4 +34,10 @@ public class PessoaCreateDTO {
     @NotBlank
     @Email
     private String email;
+
+    private List<EnderecoDTO> enderecos;
+
+    private List<ContatoDTO> contatos;
+
+    private PetDTO pet;
 }

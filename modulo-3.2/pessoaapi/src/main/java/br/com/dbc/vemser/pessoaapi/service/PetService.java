@@ -4,6 +4,7 @@ package br.com.dbc.vemser.pessoaapi.service;
 import br.com.dbc.vemser.pessoaapi.dto.PetCreateDTO;
 import br.com.dbc.vemser.pessoaapi.dto.PetDTO;
 
+import br.com.dbc.vemser.pessoaapi.entity.PessoaEntity;
 import br.com.dbc.vemser.pessoaapi.entity.PetEntity;
 import br.com.dbc.vemser.pessoaapi.exceptions.RegraDeNegocioException;
 import br.com.dbc.vemser.pessoaapi.repository.PetRepository;
@@ -32,28 +33,38 @@ public class PetService {
                 .collect(Collectors.toList());
     }
 
-    public List<PetDTO> listById(Integer idPet) {
+    public List<PetDTO> listById(Integer idPet) throws RegraDeNegocioException {
+        localizarPet(idPet);
         return  petRepository.findById(idPet).stream()
                 .filter(pet -> pet.getIdPet().equals(idPet))
                 .map(this::retornarDTO)
                 .collect(Collectors.toList());
     }
 
-    public PetDTO create(PetCreateDTO petDTO) throws RegraDeNegocioException {
-        PetEntity petEntity = retornerPetEntityByCreateDto(petDTO);
-        petEntity.setPessoa(pessoaService.localizarPessoa(petDTO.getIdPessoa()));
+    public PetDTO create(Integer id, PetCreateDTO petDTO) throws RegraDeNegocioException {
+        PessoaEntity pessoaEntity = pessoaService.localizarPessoa(id);
+        PetEntity petEntity = retornarPetEntity(petDTO);
+
+        petEntity.setPessoa(pessoaEntity);
+
         petRepository.save(petEntity);
 
         return retornarDTO(petEntity);
     }
 
     public PetDTO update(Integer id,
-                            PetDTO petDTO) throws RegraDeNegocioException {
+                            PetCreateDTO petCreateDTO) throws RegraDeNegocioException {
+        localizarPet(id);
+        pessoaService.localizarPessoa(petCreateDTO.getPessoa().getIdPessoa());
 
+        PetEntity petEntity = retornarPetEntity(petCreateDTO);
 
-        PetEntity petEntity = retornarPetEntity(petDTO);
+        petEntity.setNome(petCreateDTO.getNome());
+        petEntity.setTipo(petCreateDTO.getTipo());
         petEntity.setIdPet(id);
-        petEntity.setPessoa(pessoaService.localizarPessoa(petDTO.getIdPessoa()));
+
+        petEntity.setPessoa(pessoaService.localizarPessoa(petCreateDTO.getPessoa().getIdPessoa()));
+
         petRepository.save(petEntity);
 
         return retornarDTO(petEntity);
@@ -68,12 +79,8 @@ public class PetService {
         return objectMapper.convertValue(petEntity, PetDTO.class);
     }
 
-    public PetEntity retornerPetEntityByCreateDto (PetCreateDTO petEntity) {
-        return objectMapper.convertValue(petEntity, PetEntity.class);
-    }
-
-    public PetEntity retornarPetEntity (PetDTO petDTO) {
-        return objectMapper.convertValue(petDTO, PetEntity.class);
+    public PetEntity retornarPetEntity (PetCreateDTO petCreateDTO) {
+        return objectMapper.convertValue(petCreateDTO, PetEntity.class);
     }
 
     public PetEntity localizarPet (Integer idPet) throws RegraDeNegocioException {
