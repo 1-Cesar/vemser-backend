@@ -55,7 +55,7 @@ public class PetService {
     public PetDTO update(Integer id,
                             PetCreateDTO petCreateDTO) throws RegraDeNegocioException {
         localizarPet(id);
-        pessoaService.localizarPessoa(petCreateDTO.getPessoa().getIdPessoa());
+        pessoaService.localizarPessoa(petCreateDTO.getIdPessoa());
 
         PetEntity petEntity = retornarPetEntity(petCreateDTO);
 
@@ -63,7 +63,7 @@ public class PetService {
         petEntity.setTipo(petCreateDTO.getTipo());
         petEntity.setIdPet(id);
 
-        petEntity.setPessoa(pessoaService.localizarPessoa(petCreateDTO.getPessoa().getIdPessoa()));
+        petEntity.setPessoa(pessoaService.localizarPessoa(petCreateDTO.getIdPessoa()));
 
         petRepository.save(petEntity);
 

@@ -13,10 +13,14 @@ import br.com.dbc.vemser.pessoaapi.repository.ContatoRepository;
 import br.com.dbc.vemser.pessoaapi.service.ContatoService;
 
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
+
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -55,6 +59,14 @@ public class ContatoController {
     public List<ContatoEntity> getContatoByTipo(EnumTipo enumTipo) {
         List<ContatoEntity> contatoEntities = contatoRepository.listContatosByTipo(enumTipo);
         return contatoEntities;
+    }
+
+    @Operation(summary = "Paginação de contatos por descricao ordenada", description = "recupera todos os contatos, de forma paginada e descricao ordenada")
+    @GetMapping("/relatorio-paginado-descricao")
+    public Page<ContatoEntity> getRelatorioPaginadoDescricao(Integer pagina, Integer quantidadeRegistros){
+        Sort ordenacao = Sort.by("descricao");
+        Pageable pageable = PageRequest.of(pagina, quantidadeRegistros, ordenacao);
+        return contatoRepository.paginacaoContatosByDescricao(pageable);
     }
 
     @Operation(summary = "criar contato atraves do id da pessoa", description = "cria um contato dentro do banco de dados com base no id da pessoa")

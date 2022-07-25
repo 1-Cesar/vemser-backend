@@ -11,6 +11,10 @@ import io.swagger.v3.oas.annotations.Operation;
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -57,6 +61,21 @@ public class EnderecoController {
     public List<EnderecoEntity> getEnderecoByPais(String enderecoEntity) {
         List<EnderecoEntity> enderecoEntities = enderecoRepository.listEnderecoByPais(enderecoEntity);
         return enderecoEntities;
+    }
+
+    @Operation(summary = "Paginação de endereços por país", description = "recupera todos os endereços com base no país fornecido, de forma paginada")
+    @GetMapping("/relatorio-paginado-pais")
+    public Page<EnderecoEntity> getRelatorioPaginadoPais(Integer pagina, Integer quantidadeRegistros, @RequestParam(required = false) String pais){
+        Pageable pageable = PageRequest.of(pagina, quantidadeRegistros);
+        return enderecoRepository.paginacaoEnderecoByPais(pais, pageable);
+    }
+
+    @Operation(summary = "Paginação de endereços por cep ordenado", description = "recupera todos os endereços, de forma paginada e cep ordenado")
+    @GetMapping("/relatorio-paginado-cep")
+    public Page<EnderecoEntity> getRelatorioPaginadoCep(Integer pagina, Integer quantidadeRegistros){
+        Sort ordenacao = Sort.by("cep");
+        Pageable pageable = PageRequest.of(pagina, quantidadeRegistros, ordenacao);
+        return enderecoRepository.paginacaoEnderecoByCep(pageable);
     }
 
     @Operation(summary = "cria um endereço atraves do id da pessoa", description = "cria um endereço dentro do banco de dados com base no id da pessoa")

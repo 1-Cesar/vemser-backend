@@ -13,12 +13,10 @@ import javax.persistence.*;
 @NoArgsConstructor
 public class PetCreateDTO {
 
-    //private Integer idPessoa;
-
     private String nome;
 
     private TipoPet tipo;
 
-    private PessoaEntity pessoa;
+    private Integer idPessoa;
 
 }

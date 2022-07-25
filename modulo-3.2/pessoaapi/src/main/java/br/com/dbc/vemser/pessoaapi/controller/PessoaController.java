@@ -114,7 +114,7 @@ public class PessoaController {
         pessoaService.delete(id);
     }
 
-    @Operation(summary = "gera um relatório personalizado", description = "exibe um relatorio da pessoa com dados nome, contato, pet, etc.")
+    @Operation(summary = "gera um relatório personalizado", description = "exibe um relatorio personalizado da pessoa com dados nome, contato, pet, etc.")
     @GetMapping("/relatorio-personalizado")
     public List<RelatorioPersonalizadoDTO> getRelatorioPersonalizado(@RequestParam(required = false) Integer idPessoa) {
         return pessoaService.relatorioPersonalizado(idPessoa);
@@ -123,6 +123,6 @@ public class PessoaController {
     @Operation(summary = "gera um relatório completo da pessoa", description = "exibe um relatorio completo da pessoa com dados nome, contato, pet, etc.")
     @GetMapping("/pessoa-completa")
     public List<PessoaCompletaDTO> getPessoaCompleta(@RequestParam(required = false) Integer idPessoa) {
-        return pessoaService.pessoaCompleta(idPessoa);
+        return pessoaService.listaPessoaCompleta(idPessoa);
     }
 }

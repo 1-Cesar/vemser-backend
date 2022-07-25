@@ -20,9 +20,6 @@ public class EnderecoEntity implements Serializable {
     @Column(name = "ID_ENDERECO")
     private Integer idEndereco;
 
-/*    @Column(name = "ID_PESSOA")
-    private Integer idPessoa;*/
-
     @Column(name = "TIPO")
     private EnumTipo tipo;
 

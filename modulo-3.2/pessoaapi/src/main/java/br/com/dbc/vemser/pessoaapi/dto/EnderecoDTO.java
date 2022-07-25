@@ -13,4 +13,5 @@ public class EnderecoDTO extends EnderecoCreateDTO {
     @Schema(description = "id do endereço", example = "1")
     private Integer idEndereco;
 
+
 }

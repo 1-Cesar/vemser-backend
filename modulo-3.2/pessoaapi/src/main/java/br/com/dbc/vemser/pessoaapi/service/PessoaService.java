@@ -1,12 +1,11 @@
 package br.com.dbc.vemser.pessoaapi.service;
 
 import br.com.dbc.vemser.pessoaapi.dto.*;
-import br.com.dbc.vemser.pessoaapi.entity.ContatoEntity;
+
 import br.com.dbc.vemser.pessoaapi.entity.PessoaEntity;
-import br.com.dbc.vemser.pessoaapi.entity.PetEntity;
+
 import br.com.dbc.vemser.pessoaapi.exceptions.RegraDeNegocioException;
-import br.com.dbc.vemser.pessoaapi.repository.ContatoRepository;
-import br.com.dbc.vemser.pessoaapi.repository.EnderecoRepository;
+
 import br.com.dbc.vemser.pessoaapi.repository.PessoaRepository;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -34,10 +33,6 @@ public class PessoaService {
 
     public List<RelatorioPersonalizadoDTO> relatorioPersonalizado(Integer id){
         return pessoaRepository.relatorioPersonalizado(id);
-    }
-
-    public List<PessoaCompletaDTO> pessoaCompleta(Integer id){
-        return pessoaRepository.pessoaCompleta(id);
     }
 
     public List<PessoaDTO> list(){
@@ -117,6 +112,32 @@ public class PessoaService {
                         return pessoaDTO;
                     }).toList();
         }
+    }
+
+    public List<PessoaCompletaDTO> listaPessoaCompleta(Integer idPessoa) {
+        if(idPessoa == null) {
+            return pessoaRepository.findAll().stream()
+                    .map(this::conversoes)
+                    .collect(Collectors.toList());
+        } else {
+            return pessoaRepository.findById(idPessoa).stream()
+                    .map(this::conversoes)
+                    .collect(Collectors.toList());
+        }
+    }
+
+    private PessoaCompletaDTO conversoes(PessoaEntity pessoaEntity) {
+
+        PessoaCompletaDTO pessoaCompletaDTO = objectMapper.convertValue(pessoaEntity,PessoaCompletaDTO.class);
+
+        pessoaCompletaDTO.setEnderecoDTOS(pessoaEntity.getEnderecos().stream()
+                .map(enderecoEntity -> objectMapper.convertValue(enderecoEntity,EnderecoDTO.class))
+                .collect(Collectors.toList()));
+        pessoaCompletaDTO.setPet(objectMapper.convertValue(pessoaEntity.getPet(), PetDTO.class));
+        pessoaCompletaDTO.setContatoDTOS(pessoaEntity.getContatos().stream()
+                .map(contatoEntity -> objectMapper.convertValue(contatoEntity, ContatoDTO.class))
+                .collect(Collectors.toList()));
+        return pessoaCompletaDTO;
     }
 
     public PessoaDTO create(PessoaCreateDTO pessoaBodyDTO) {

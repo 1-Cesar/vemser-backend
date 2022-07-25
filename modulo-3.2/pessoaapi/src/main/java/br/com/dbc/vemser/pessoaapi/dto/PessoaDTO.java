@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -14,5 +16,7 @@ public class PessoaDTO extends PessoaCreateDTO {
 
     @Schema(description = "id da pessoa", example = "1")
     private Integer idPessoa;
+
+    private List<EnderecoDTO> enderecoDTOS;
 
 }

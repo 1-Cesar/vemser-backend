@@ -9,7 +9,6 @@ import java.io.Serializable;
 import java.time.LocalDate;
 
 import java.util.List;
-import java.util.Set;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -36,9 +35,6 @@ public class PessoaEntity implements Serializable {
 
     @Column(name = "EMAIL")
     private String email;
-
-//    @Column(name = "ID_PET")
-//    private Integer idPet;
 
     @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY,

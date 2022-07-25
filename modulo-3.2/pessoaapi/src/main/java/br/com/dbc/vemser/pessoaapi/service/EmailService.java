@@ -28,7 +28,6 @@ public class EmailService {
 
     private final freemarker.template.Configuration fmConfiguration;
 
-
     @Value("${spring.mail.username}")
     private String from;
 
