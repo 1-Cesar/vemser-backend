@@ -2,7 +2,7 @@ package homework;
 
 import java.time.LocalDateTime;
 
-public class ex03 {
+public class Ex03 {
 
     public void terceiro () {
         System.out.println("\nImprimir qual é o dia da semana e o dia do ano (corrido) correspondente da data atual + 15 dias e 10 horas");
