@@ -51,7 +51,7 @@ public class PessoaEntity implements Serializable {
     private List<EnderecoEntity> enderecos;
 
     @JsonIgnore
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "id_pessoa", referencedColumnName = "id_pessoa")
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "id_pet", referencedColumnName = "id_pet")
     private PetEntity pet;
 }

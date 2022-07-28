@@ -1,5 +1,6 @@
 package br.com.dbc.vemser.pessoaapi.config;
 
+import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.info.Contact;
 import io.swagger.v3.oas.models.info.License;
@@ -14,9 +15,21 @@ import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.responses.ApiResponse;
 import io.swagger.v3.oas.models.responses.ApiResponses;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 @Configuration
+@Hidden
+@RestController
 public class OpenApiConfig {
+
+    @GetMapping(value = "/")
+    public void index(HttpServletResponse response) throws IOException {
+        response.sendRedirect("/swagger-ui/index.html");
+    }
 
     @Bean
     public OpenAPI springOpenAPI() {
