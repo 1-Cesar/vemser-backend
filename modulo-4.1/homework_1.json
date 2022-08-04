@@ -1,0 +1,23 @@
+[{
+  "_id": {
+    "$oid": "62eb5a540924daa5151fc96a"
+  },
+  "nome": "cesar",
+  "email": "cesar@teste.com",
+  "areaAtuacao": "Java",
+  "cpfCnpj": "11111111111",
+  "foto": "https://foto.foto",
+  "genero": "MASCULINO",
+  "tipoUsuario": "DEV"
+},{
+  "_id": {
+    "$oid": "62eb5a5c0924daa5151fc96b"
+  },
+  "nome": "Cesar Augusto",
+  "email": "cesar2@teste2.com",
+  "areaAtuacao": "Java",
+  "cpfCnpj": "22222222222",
+  "foto": "https://foto.foto",
+  "genero": "MASCULINO",
+  "tipoUsuario": "DEV"
+}]

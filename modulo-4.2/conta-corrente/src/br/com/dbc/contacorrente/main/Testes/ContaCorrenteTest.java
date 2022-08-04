@@ -62,7 +62,7 @@ public class ContaCorrenteTest {
         boolean conseguiuSacar = contaPagamento.sacar((double)valorSaque);
         Assertions.assertTrue(conseguiuSacar);
         Assertions.assertEquals(495.75, contaPagamento.getSaldo());
-    }
+    }d
 
     @Test
     public void deveTestarSaqueContaPagamentoSemSaldo() {
