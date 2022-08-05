@@ -4,6 +4,7 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Accumulators;
 import com.mongodb.client.model.Filters;
+import com.mongodb.client.model.Projections;
 import org.bson.Document;
 
 import java.util.Arrays;
@@ -99,6 +100,17 @@ public class Main {
                         match(Filters.eq("tipoPostagem", "PROGRAMA DE FORMAÇÃO")),
                         group("$titulo", Accumulators.sum("sumCurtidas", "$curtidas"))
                 )).forEach(doc -> System.out.println(doc.toJson()));
+
+        System.out.println("\n-- PROJECTIONS");
+        usuarios.find()
+                        .projection(Projections.exclude("_id","foto"))
+                                .iterator()
+                                        .forEachRemaining(System.out::println);
+
+        usuarios.find()
+                .projection(Projections.exclude("_id","foto","cpfCnpj","genero"))
+                .iterator()
+                .forEachRemaining(System.out::println);
 
         mongoClient.close();
     }
