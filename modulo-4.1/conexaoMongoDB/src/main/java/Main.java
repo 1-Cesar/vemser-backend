@@ -1,7 +1,4 @@
-import com.mongodb.client.MongoClient;
-import com.mongodb.client.MongoClients;
-import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.*;
 import com.mongodb.client.model.Accumulators;
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.Projections;
@@ -9,6 +6,7 @@ import org.bson.Document;
 
 import java.util.Arrays;
 import java.util.Date;
+import java.util.Iterator;
 
 import static com.mongodb.client.model.Aggregates.group;
 import static com.mongodb.client.model.Aggregates.match;
@@ -111,6 +109,16 @@ public class Main {
                 .projection(Projections.exclude("_id","foto","cpfCnpj","genero"))
                 .iterator()
                 .forEachRemaining(System.out::println);
+
+        FindIterable findIterable =
+                usuarios.find(Filters.eq("tipoUsuario", "DEV"));
+        Iterator iterator = findIterable.iterator();
+        int count = 0;
+        while (iterator.hasNext()) {
+            iterator.next();
+            count++;
+        }
+        System.out.println(">>>>> count = " + count);
 
         mongoClient.close();
     }
