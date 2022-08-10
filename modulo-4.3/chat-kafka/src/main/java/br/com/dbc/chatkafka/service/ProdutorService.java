@@ -1,6 +1,5 @@
 package br.com.dbc.chatkafka.service;
 
-import br.com.dbc.chatkafka.dto.MensagemCreateDto;
 import br.com.dbc.chatkafka.dto.MensagemDto;
 import br.com.dbc.chatkafka.enums.GaleraEnum;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -33,13 +32,12 @@ public class ProdutorService {
     @Value("${nome}")
     private String nome;
 
-    public void capturandoMensagem(MensagemCreateDto mensagemCreateDto, List<GaleraEnum> topico) throws JsonProcessingException {
+    public void capturandoMensagem(MensagemDto mensagemDto, List<GaleraEnum> topico) throws JsonProcessingException {
 
-        MensagemDto mensagemDTO = new MensagemDto(nome, LocalDateTime.now());
+        mensagemDto.setUsuario(nome);
+        mensagemDto.setDataCriacao(LocalDateTime.now());
 
-        mensagemDTO.setMensagem(mensagemCreateDto.getMensagem());
-
-        String mensagemObjetoString = objectMapper.writeValueAsString(mensagemDTO);
+        String mensagemObjetoString = objectMapper.writeValueAsString(mensagemDto);
         topico
                         .forEach(topicos -> enviarMensagem(mensagemObjetoString, topicos.getChat()));
     }
