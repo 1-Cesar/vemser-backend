@@ -24,9 +24,9 @@ public class ConsumidorService {
 
     @KafkaListener(
             topics = "${kafka.chat-geral}",
-            groupId = "cesar",
+            groupId = "${kafka.user}",
             containerFactory = "listenerContainerFactory",
-            clientIdPrefix = "cesar"
+            clientIdPrefix = "chat-geral"
     )
     public void consumir(@Payload String mensagem,
                          @Header(KafkaHeaders.RECEIVED_MESSAGE_KEY) String key,
@@ -41,9 +41,9 @@ public class ConsumidorService {
 
     @KafkaListener(
             topics = "${kafka.chat-cesar}",
-            groupId = "cesar",
+            groupId = "${kafka.user}",
             containerFactory = "listenerContainerFactory",
-            clientIdPrefix = "$nome"
+            clientIdPrefix = "chat-privado"
     )
     public void consumirPrivado(@Payload String mensagem,
                          @Header(KafkaHeaders.RECEIVED_MESSAGE_KEY) String key,

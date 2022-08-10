@@ -21,7 +21,7 @@ public class KafkaConsumerConfig {
     private String bootstrapAddres;
 
     @Value("${kafka.cesar-id}")
-    private String sensorId;
+    private String cesarId;
 
     @Bean
     public ConcurrentKafkaListenerContainerFactory<String, String> listenerContainerFactory() {
@@ -29,7 +29,7 @@ public class KafkaConsumerConfig {
         props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapAddres);
         props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
         props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
-        props.put(ConsumerConfig.CLIENT_ID_CONFIG, sensorId);
+        props.put(ConsumerConfig.CLIENT_ID_CONFIG, cesarId);
         props.put(ConsumerConfig.MAX_POLL_RECORDS_CONFIG, 10);
         props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, EARLIEST);
 

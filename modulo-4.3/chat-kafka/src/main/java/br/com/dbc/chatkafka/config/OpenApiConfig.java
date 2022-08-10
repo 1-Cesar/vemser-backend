@@ -25,7 +25,6 @@ import java.io.IOException;
 @RestController
 public class OpenApiConfig {
 
-
     @GetMapping(value = "/")
     public void index(HttpServletResponse response) throws IOException {
         response.sendRedirect("/swagger-ui/index.html");
